@@ -25,20 +25,39 @@ class AuthController extends Controller
             ->where('status_akun', 'aktif')
             ->first();
 
-        if ($pengguna && Hash::check($credentials['password'], $pengguna->kata_sandi)) {
-            Auth::login($pengguna);
+        // Cek apakah akun ditemukan dan password benar
+        if (!$pengguna || !Hash::check($credentials['password'], $pengguna->kata_sandi)) {
+            return back()->withErrors([
+                'email' => 'Email atau password salah.',
+            ])->withInput();
+        }
 
-            $request->session()->regenerate();
+        // Login pengguna
+        Auth::login($pengguna);
 
-            if ($pengguna->role === 'admin') {
-                return redirect()->route('admin.dashboard');
-            }
+        // Regenerasi session untuk keamanan
+        $request->session()->regenerate();
 
+        // ADMIN
+        if ($pengguna->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+
+        // PETUGAS
+        if ($pengguna->role === 'petugas') {
+            return redirect()->route('petugas.dashboard');
+        }
+
+        // MASYARAKAT
+        if ($pengguna->role === 'masyarakat') {
             return redirect()->route('dashboard');
         }
 
+        // Jika role tidak dikenali
+        Auth::logout();
+
         return back()->withErrors([
-            'email' => 'Email atau password salah.',
+            'email' => 'Role pengguna tidak dikenali.',
         ])->withInput();
     }
 

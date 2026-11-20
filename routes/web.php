@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\RtRwController;
 use App\Http\Controllers\Admin\BackupController;
 use App\Http\Controllers\Admin\SeksiController;
+use App\Http\Controllers\Petugas\DashboardController;
+use App\Http\Controllers\Petugas\PengaduanController;
 
 Route::get('/', function () {
     return view('home');
@@ -24,6 +26,22 @@ Route::post('/logout', [AuthController::class, 'logout'])
 Route::get('/dashboard', function () {
     return view('home');
 })->middleware('auth')->name('dashboard');
+
+Route::prefix('petugas')->middleware(['auth', 'role:petugas'])->group(function () {
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('petugas.dashboard');
+
+    Route::get('/pengaduan', [PengaduanController::class, 'index'])
+        ->name('petugas.pengaduan.index');
+
+    Route::get('/pengaduan/create', [PengaduanController::class, 'create'])
+        ->name('petugas.pengaduan.create');
+
+    Route::post('/pengaduan', [PengaduanController::class, 'store'])
+        ->name('petugas.pengaduan.store');
+
+});
 
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
