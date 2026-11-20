@@ -1,2 +1,11 @@
-*
-!.gitignore
+/vendor/
+/node_modules/
+/.env
+/.env.*
+!/.env.example
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
