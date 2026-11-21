@@ -32,15 +32,20 @@ Route::prefix('petugas')->middleware(['auth', 'role:petugas'])->group(function (
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('petugas.dashboard');
 
-    Route::get('/pengaduan', [PengaduanController::class, 'index'])
+    // Pengaduan Masuk = Verifikasi Pengaduan
+    Route::get('/pengaduan', [\App\Http\Controllers\Petugas\PengaduanController::class, 'index'])
         ->name('petugas.pengaduan.index');
 
-    Route::get('/pengaduan/create', [PengaduanController::class, 'create'])
+    // Input Pengaduan
+    Route::get('/pengaduan/create', [\App\Http\Controllers\Petugas\PengaduanController::class, 'create'])
         ->name('petugas.pengaduan.create');
 
-    Route::post('/pengaduan', [PengaduanController::class, 'store'])
+    Route::post('/pengaduan', [\App\Http\Controllers\Petugas\PengaduanController::class, 'store'])
         ->name('petugas.pengaduan.store');
 
+    // Proses verifikasi
+    Route::post('/pengaduan/{id}/verifikasi', [\App\Http\Controllers\Petugas\PengaduanController::class, 'verifikasi'])
+        ->name('petugas.pengaduan.verifikasi');
 });
 
 Route::get('/admin/dashboard', function () {

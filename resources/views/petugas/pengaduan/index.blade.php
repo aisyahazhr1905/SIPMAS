@@ -4,670 +4,1437 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Pengaduan Masuk - SIPMAS</title>
+    <title>Verifikasi Pengaduan - SIPMAS</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
         }
 
         body {
-            background: #f5f7fb;
-            color: #1f2937;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #263b50;
+            font-size: 14px;
         }
 
-        .layout {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* SIDEBAR */
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
 
         .sidebar {
-            width: 245px;
-            background: #172554;
-            color: white;
-            height: 100vh;
             position: fixed;
             left: 0;
             top: 0;
-            bottom: 0;
+
+            width: 270px;
+            height: 100vh;
+
+            background: #12314a;
+            color: white;
+
+            padding: 30px 20px;
+
+            z-index: 100;
+
             overflow-y: auto;
             overflow-x: hidden;
         }
 
-        .logo {
-            padding: 25px 22px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+        /* =====================================================
+           BRAND
+        ===================================================== */
+
+        .brand {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 0 14px 25px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.14);
         }
 
-        .logo h2 {
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+
+            background: white;
+
+            border-radius: 9px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #376d9e;
+
             font-size: 20px;
-            margin-bottom: 5px;
+            font-weight: bold;
         }
 
-        .logo p {
-            font-size: 12px;
-            color: #cbd5e1;
+        .brand-text strong {
+            display: block;
+
+            color: white;
+
+            font-size: 21px;
+
+            line-height: 1.1;
+        }
+
+        .brand-text small {
+            display: block;
+
+            color: #b8c8d6;
+
+            font-size: 10px;
+
+            margin-top: 5px;
+        }
+
+        /* =====================================================
+           MENU
+        ===================================================== */
+
+        .menu-title {
+            margin: 35px 14px 16px;
+
+            color: #8298aa;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.3px;
         }
 
         .menu {
-            padding: 20px 12px;
-        }
+            display: flex;
 
-        .menu-title {
-            font-size: 11px;
-            color: #94a3b8;
-            text-transform: uppercase;
-            margin: 10px 12px;
-            letter-spacing: 0.5px;
+            flex-direction: column;
+
+            gap: 7px;
         }
 
         .menu a {
+            min-height: 50px;
+
+            padding: 0 14px;
+
+            border-radius: 8px;
+
             display: flex;
+
             align-items: center;
+
             gap: 12px;
+
+            color: #b7c6d3;
+
             text-decoration: none;
-            color: #dbeafe;
-            padding: 12px 13px;
-            margin-bottom: 5px;
-            border-radius: 7px;
-            font-size: 13px;
+
+            font-size: 15px;
+
+            transition: 0.2s;
         }
 
         .menu a:hover {
-            background: #1e3a8a;
+            background: #28587f;
+
             color: white;
         }
 
         .menu a.active {
-            background: #2563eb;
+            background: #376f9f;
+
             color: white;
+
+            font-weight: 600;
         }
 
-        .icon {
-            width: 20px;
+        .menu-icon {
+            width: 23px;
+
             text-align: center;
-            font-size: 15px;
+
+            font-size: 19px;
+
+            color: #b9cbd9;
         }
 
-        .logout {
-            position: sticky;
-            bottom: 0;
-            padding: 10px 12px 20px;
-            background: #172554;
-        }
-
-        .logout button {
-            width: 100%;
-            border: none;
-            background: #1e3a8a;
-            color: #dbeafe;
-            padding: 11px;
-            border-radius: 7px;
-            cursor: pointer;
-            font-size: 13px;
-        }
-
-        .logout button:hover {
-            background: #dc2626;
+        .menu a.active .menu-icon {
             color: white;
         }
 
-        /* MAIN */
+        .menu-label {
+            flex: 1;
+
+            line-height: 1.25;
+        }
+
+        /* =====================================================
+           BADGE
+        ===================================================== */
+
+        .badge {
+            width: 20px;
+            height: 20px;
+
+            border-radius: 50%;
+
+            background: #ef5962;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 10px;
+
+            font-weight: bold;
+        }
+
+        /* =====================================================
+           PROFILE
+        ===================================================== */
+
+        .profile {
+            margin: 70px 8px 0;
+
+            padding-top: 15px;
+
+            border-top: 1px solid rgba(255,255,255,0.14);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+        }
+
+        .profile-avatar {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            background: #376fa2;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 11px;
+
+            font-weight: 600;
+        }
+
+        .profile-info {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 4px;
+        }
+
+        .profile-info strong {
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+        .profile-info span {
+            color: #9db0c1;
+
+            font-size: 11px;
+        }
+
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
+        .logout-form {
+            margin: 20px 8px 10px;
+        }
+
+        .logout-btn {
+            border: none;
+
+            background: transparent;
+
+            color: #9fb1c0;
+
+            font-size: 12px;
+
+            cursor: pointer;
+
+            padding: 0;
+        }
+
+        .logout-btn span {
+            margin-right: 6px;
+
+            font-size: 16px;
+        }
+
+        .logout-btn:hover {
+            color: white;
+        }
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
 
         .main {
-            margin-left: 245px;
-            width: calc(100% - 245px);
+            margin-left: 270px;
+
             min-height: 100vh;
+
+            padding: 22px 24px 45px;
         }
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
 
         .topbar {
-            height: 70px;
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
+            min-height: 60px;
+
             display: flex;
-            align-items: center;
+
             justify-content: space-between;
-            padding: 0 30px;
+
+            align-items: flex-start;
         }
 
-        .page-title h1 {
-            font-size: 21px;
-            color: #111827;
-            margin-bottom: 4px;
+        .breadcrumb {
+            font-size: 10px;
+
+            color: #9aa8b5;
+
+            margin-bottom: 5px;
         }
 
-        .page-title p {
-            font-size: 12px;
-            color: #6b7280;
+        .breadcrumb span {
+            color: #3678b2;
         }
 
-        .top-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
+        .page-title {
+            font-size: 20px;
+
+            color: #263c52;
+
+            font-weight: 700;
         }
+
+        /* =====================================================
+           SEARCH
+        ===================================================== */
 
         .search {
             width: 220px;
+
+            height: 35px;
+
+            background: white;
+
+            border: 1px solid #dfe6ed;
+
+            border-radius: 6px;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 0 11px;
+
+            color: #a5b0bc;
+
+            font-size: 10px;
+        }
+
+        .search-icon {
+            margin-right: 7px;
+
+            font-size: 15px;
         }
 
         .search input {
             width: 100%;
-            border: 1px solid #e5e7eb;
-            border-radius: 7px;
-            padding: 9px 12px;
+
+            border: none;
+
             outline: none;
-            font-size: 12px;
-            background: #f9fafb;
-        }
 
-        .profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .profile-avatar {
-            width: 36px;
-            height: 36px;
-            background: #2563eb;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: bold;
-            font-size: 13px;
-        }
-
-        .profile-info strong {
-            display: block;
-            font-size: 12px;
-        }
-
-        .profile-info span {
             font-size: 10px;
-            color: #6b7280;
+
+            color: #263c52;
         }
 
-        /* CONTENT */
+        .search input::placeholder {
+            color: #a5b0bc;
+        }
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
 
         .content {
-            padding: 28px 30px;
+            padding-top: 15px;
         }
 
-        .heading {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 22px;
+        /* =====================================================
+           VERIFICATION GRID
+        ===================================================== */
+
+        .verification-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.65fr)
+                minmax(280px, .9fr);
+
+            gap: 18px;
+
+            align-items: start;
         }
 
-        .heading h2 {
-            font-size: 20px;
-            color: #111827;
-            margin-bottom: 5px;
-        }
+        /* =====================================================
+           CARD
+        ===================================================== */
 
-        .heading p {
-            font-size: 12px;
-            color: #6b7280;
-        }
-
-        .btn {
-            display: inline-block;
-            background: #2563eb;
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 7px;
-            font-size: 12px;
-        }
-
-        .btn:hover {
-            background: #1d4ed8;
-        }
-
-        /* CARD */
-
-        .card {
+        .complaint-card,
+        .verification-card {
             background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 9px;
-            overflow: hidden;
+
+            border: 1px solid #e1e7ed;
+
+            border-radius: 7px;
+
+            box-shadow: 0 2px 7px rgba(30,70,100,.04);
         }
 
-        .card-header {
-            padding: 17px 20px;
-            border-bottom: 1px solid #e5e7eb;
+        /* =====================================================
+           DETAIL PENGADUAN
+        ===================================================== */
+
+        .complaint-card {
+            padding: 20px;
+        }
+
+        .complaint-header {
             display: flex;
-            justify-content: space-between;
+
             align-items: center;
-        }
 
-        .card-header h3 {
-            font-size: 14px;
-        }
+            justify-content: space-between;
 
-        .total {
-            font-size: 11px;
-            color: #6b7280;
-        }
+            gap: 15px;
 
-        /* TABLE */
-
-        .table-container {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            background: #f9fafb;
-            color: #6b7280;
-            font-size: 10px;
-            text-align: left;
-            padding: 13px 15px;
-            text-transform: uppercase;
-            white-space: nowrap;
-        }
-
-        td {
-            padding: 14px 15px;
-            border-top: 1px solid #f1f5f9;
-            font-size: 11px;
-            color: #374151;
-            white-space: nowrap;
+            margin-bottom: 12px;
         }
 
         .ticket {
-            color: #2563eb;
-            font-weight: bold;
+            color: #316a9f;
+
+            font-size: 11px;
+
+            font-weight: 700;
         }
 
-        .status,
-        .priority {
-            display: inline-block;
-            padding: 5px 8px;
-            border-radius: 20px;
-            font-size: 9px;
-            font-weight: bold;
-        }
+        .status-badge {
+            padding: 5px 9px;
 
-        .status-menunggu {
-            background: #fef3c7;
-            color: #92400e;
-        }
+            background: #e3edf8;
 
-        .status-proses {
-            background: #dbeafe;
-            color: #1d4ed8;
-        }
+            color: #356d9f;
 
-        .status-selesai {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .priority-tinggi {
-            background: #fee2e2;
-            color: #b91c1c;
-        }
-
-        .priority-sedang {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .priority-rendah {
-            background: #e0f2fe;
-            color: #0369a1;
-        }
-
-        .btn-process {
-            background: #eff6ff;
-            color: #2563eb;
-            padding: 6px 10px;
             border-radius: 5px;
-            text-decoration: none;
-            font-size: 10px;
+
+            font-size: 8px;
+
+            font-weight: 600;
         }
 
-        .btn-process:hover {
-            background: #2563eb;
-            color: white;
+        .complaint-title {
+            margin: 0 0 18px;
+
+            color: #263d54;
+
+            font-size: 20px;
+
+            line-height: 1.25;
+
+            font-weight: 700;
         }
 
-        /* EMPTY */
+        /* =====================================================
+           INFORMASI
+        ===================================================== */
 
-        .empty {
-            text-align: center;
-            padding: 70px 20px;
-        }
+        .information-grid {
+            display: grid;
 
-        .empty-icon {
-            width: 55px;
-            height: 55px;
-            margin: 0 auto 15px;
-            border-radius: 50%;
-            background: #eff6ff;
-            color: #2563eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-        }
+            grid-template-columns:
+                1fr
+                1fr
+                1fr;
 
-        .empty h3 {
-            font-size: 15px;
-            margin-bottom: 7px;
-            color: #374151;
-        }
+            gap: 18px;
 
-        .empty p {
-            font-size: 12px;
-            color: #6b7280;
             margin-bottom: 18px;
         }
 
-        @media (max-width: 900px) {
-            .top-right .search {
-                display: none;
+        .info-label {
+            margin-bottom: 5px;
+
+            color: #98a6b4;
+
+            font-size: 8px;
+        }
+
+        .info-value {
+            color: #263d54;
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+            line-height: 1.4;
+        }
+
+        /* =====================================================
+           URAIAN
+        ===================================================== */
+
+        .description {
+            margin-bottom: 15px;
+        }
+
+        .description-label {
+            margin-bottom: 5px;
+
+            color: #98a6b4;
+
+            font-size: 8px;
+        }
+
+        .description-text {
+            color: #516579;
+
+            font-size: 9px;
+
+            line-height: 1.5;
+
+            word-break: break-word;
+        }
+
+        /* =====================================================
+           FOTO
+        ===================================================== */
+
+        .photos {
+            display: flex;
+
+            gap: 7px;
+
+            margin-top: 12px;
+        }
+
+        .photo {
+            width: 54px;
+
+            height: 54px;
+
+            border-radius: 6px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #b7d8e9,
+                    #5f94b9
+                );
+
+            border: 1px solid #d6e2eb;
+        }
+
+        .photo.second {
+            background:
+                linear-gradient(
+                    135deg,
+                    #c6dfa9,
+                    #83ae67
+                );
+        }
+
+        /* =====================================================
+           VERIFIKASI
+        ===================================================== */
+
+        .verification-card {
+            padding: 20px;
+        }
+
+        .verification-title {
+            margin: 0 0 17px;
+
+            color: #263d54;
+
+            font-size: 14px;
+
+            font-weight: 700;
+        }
+
+        /* =====================================================
+           CHECKLIST
+        ===================================================== */
+
+        .check-list {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 10px;
+
+            margin-bottom: 15px;
+        }
+
+        .check-item {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #516579;
+
+            font-size: 9px;
+
+            cursor: pointer;
+        }
+
+        .check-item input {
+            width: 12px;
+            height: 12px;
+
+            cursor: pointer;
+
+            accent-color: #356b9d;
+        }
+
+        /* =====================================================
+           HASIL VERIFIKASI
+        ===================================================== */
+
+        .result-title {
+            margin-bottom: 8px;
+
+            color: #516579;
+
+            font-size: 9px;
+
+            font-weight: 600;
+        }
+
+        .result-options {
+            display: flex;
+
+            gap: 6px;
+
+            margin-bottom: 15px;
+        }
+
+        .result-btn {
+            height: 28px;
+
+            padding: 0 12px;
+
+            border-radius: 5px;
+
+            border: 1px solid #dce4ec;
+
+            background: white;
+
+            color: #3970a2;
+
+            font-size: 8px;
+
+            cursor: pointer;
+        }
+
+        .result-btn.active {
+            background: #356b9d;
+
+            border-color: #356b9d;
+
+            color: white;
+        }
+
+        /* =====================================================
+           ACTION BUTTON
+        ===================================================== */
+
+        .action-buttons {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 8px;
+        }
+
+        .btn {
+            height: 34px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            color: white;
+
+            font-size: 9px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .btn-verifikasi {
+            background: #15965f;
+        }
+
+        .btn-verifikasi:hover {
+            background: #117e50;
+        }
+
+        .btn-tolak {
+            background: #d9342f;
+        }
+
+        .btn-tolak:hover {
+            background: #b92b27;
+        }
+
+        /* =====================================================
+           EMPTY
+        ===================================================== */
+
+        .empty-card {
+            background: white;
+
+            border: 1px solid #e1e7ed;
+
+            border-radius: 7px;
+
+            padding: 60px 30px;
+
+            text-align: center;
+
+            color: #8fa2b3;
+        }
+
+        .empty-card h3 {
+            margin-bottom: 8px;
+
+            color: #263d54;
+
+            font-size: 16px;
+        }
+
+        .empty-card p {
+            font-size: 10px;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1000px) {
+
+            .sidebar {
+                width: 240px;
             }
 
-            .heading {
-                align-items: flex-start;
-                gap: 15px;
-                flex-direction: column;
+            .main {
+                margin-left: 240px;
+            }
+
+            .verification-grid {
+                grid-template-columns: 1fr;
             }
         }
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .topbar {
+                flex-direction: column;
+
+                gap: 12px;
+            }
+
+            .search {
+                width: 100%;
+            }
+
+            .information-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                font-size: 15px;
+            }
+
+            .breadcrumb {
+                font-size: 12px;
+            }
+
+            .page-title {
+                font-size: 28px;
+            }
+
+            .search {
+                font-size: 13px;
+            }
+
+            .verification-title {
+                font-size: 19px;
+            }
+
+            .complaint-title {
+                font-size: 25px;
+            }
+
+            .check-item {
+                font-size: 13px;
+            }
+
+            .result-title {
+                font-size: 13px;
+            }
+
+            .result-btn {
+                font-size: 12px;
+            }
+
+            .btn {
+                font-size: 13px;
+            }
+        }
+
     </style>
 </head>
 
 <body>
 
-<div class="layout">
+@php
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
+    /*
+    |--------------------------------------------------------------------------
+    | Ambil pengaduan yang akan diverifikasi
+    |--------------------------------------------------------------------------
+    */
 
-        <div class="logo">
-            <h2>SIPMAS</h2>
-            <p>Sistem Informasi Pengaduan Masyarakat</p>
+    $data = null;
+    $jumlahPengaduan = 0;
+
+    if (isset($pengaduan)) {
+
+        /*
+        | Controller menggunakan ->get(),
+        | jadi $pengaduan adalah Collection.
+        */
+
+        if ($pengaduan instanceof \Illuminate\Support\Collection) {
+
+            $jumlahPengaduan = $pengaduan->count();
+
+            /*
+            | Prioritaskan pengaduan dengan status diajukan.
+            */
+
+            $data = $pengaduan
+                ->firstWhere('status', 'diajukan');
+
+            /*
+            | Kalau tidak ada status diajukan,
+            | ambil pengaduan pertama.
+            */
+
+            if (!$data) {
+                $data = $pengaduan->first();
+            }
+
+        } else {
+
+            /*
+            | Pengaman kalau suatu saat controller
+            | mengirim satu object saja.
+            */
+
+            $data = $pengaduan;
+
+            $jumlahPengaduan = $data ? 1 : 0;
+        }
+    }
+
+@endphp
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+    <!-- BRAND -->
+
+    <div class="brand">
+
+        <div class="brand-logo">
+            ✥
         </div>
 
-        <nav class="menu">
+        <div class="brand-text">
 
-            <div class="menu-title">Menu Utama</div>
+            <strong>SIPMAS</strong>
 
-            <a href="{{ route('petugas.dashboard') }}">
-                <span class="icon">▦</span>
-                <span>Dashboard</span>
-            </a>
+            <small>
+                Kelurahan Sungai Bangek
+            </small>
 
-            <a href="{{ route('petugas.pengaduan.index') }}" class="active">
-                <span class="icon">▤</span>
-                <span>Pengaduan Masuk</span>
-            </a>
-
-            <a href="#">
-                <span class="icon">＋</span>
-                <span>Input Pengaduan</span>
-            </a>
-
-            <div class="menu-title">Pengelolaan</div>
-
-            <a href="#">
-                <span class="icon">✓</span>
-                <span>Verifikasi Pengaduan</span>
-            </a>
-
-            <a href="#">
-                <span class="icon">◆</span>
-                <span>Prioritas & Penerusan</span>
-            </a>
-
-            <a href="#">
-                <span class="icon">↻</span>
-                <span>Status & Tanggapan</span>
-            </a>
-
-            <a href="#">
-                <span class="icon">▣</span>
-                <span>Arsip Pengaduan</span>
-            </a>
-
-            <div class="menu-title">Laporan</div>
-
-            <a href="#">
-                <span class="icon">▥</span>
-                <span>Laporan Rekapitulasi</span>
-            </a>
-
-        </nav>
-
-        <div class="logout">
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit">
-                    ⇥ &nbsp; Keluar
-                </button>
-            </form>
         </div>
 
-    </aside>
+    </div>
 
 
-    <!-- MAIN -->
-    <main class="main">
+    <!-- MENU -->
 
-        <!-- TOPBAR -->
-        <header class="topbar">
+    <div class="menu-title">
+        PELAYANAN
+    </div>
 
-            <div class="page-title">
-                <h1>Pengaduan Masuk</h1>
-                <p>Kelola dan tindak lanjuti pengaduan masyarakat</p>
+
+    <nav class="menu">
+
+        <!-- DASHBOARD -->
+
+        <a href="{{ route('petugas.dashboard') }}">
+
+            <span class="menu-icon">
+                ▦
+            </span>
+
+            <span class="menu-label">
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <!-- PENGADUAN MASUK -->
+
+        <a
+            href="{{ route('petugas.pengaduan.index') }}"
+            class="active"
+        >
+
+            <span class="menu-icon">
+                ▱
+            </span>
+
+            <span class="menu-label">
+                Pengaduan<br>Masuk
+            </span>
+
+            @if($jumlahPengaduan > 0)
+
+                <span class="badge">
+                    {{ $jumlahPengaduan }}
+                </span>
+
+            @endif
+
+        </a>
+
+
+        <!-- INPUT PENGADUAN -->
+
+        <a href="{{ route('petugas.pengaduan.create') }}">
+
+            <span class="menu-icon">
+                ⌑
+            </span>
+
+            <span class="menu-label">
+                Input Pengaduan
+            </span>
+
+        </a>
+
+
+        <!-- DATA PENGADUAN -->
+
+        <a href="{{ route('petugas.pengaduan.index') }}">
+
+            <span class="menu-icon">
+                ▤
+            </span>
+
+            <span class="menu-label">
+                Data Pengaduan
+            </span>
+
+        </a>
+
+
+        <!-- LAPORAN -->
+
+        <a href="#">
+
+            <span class="menu-icon">
+                ⌁
+            </span>
+
+            <span class="menu-label">
+                Laporan
+            </span>
+
+        </a>
+
+
+        <!-- NOTIFIKASI -->
+
+        <a href="#">
+
+            <span class="menu-icon">
+                ♧
+            </span>
+
+            <span class="menu-label">
+                Notifikasi
+            </span>
+
+        </a>
+
+    </nav>
+
+
+    <!-- PROFILE -->
+
+    <div class="profile">
+
+        <div class="profile-avatar">
+
+            {{ strtoupper(substr(auth()->user()->nama_lengkap ?? 'BS', 0, 2)) }}
+
+        </div>
+
+        <div class="profile-info">
+
+            <strong>
+                {{ auth()->user()->nama_lengkap ?? 'Petugas SIPMAS' }}
+            </strong>
+
+            <span>
+                Petugas
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOGOUT -->
+
+    <form
+        method="POST"
+        action="{{ route('logout') }}"
+        class="logout-form"
+    >
+
+        @csrf
+
+        <button
+            type="submit"
+            class="logout-btn"
+        >
+
+            <span>←</span>
+            Keluar
+
+        </button>
+
+    </form>
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- HEADER -->
+
+    <header class="topbar">
+
+        <div>
+
+            <div class="breadcrumb">
+
+                Petugas /
+
+                <span>
+                    Pengaduan Masuk
+                </span>
+
             </div>
 
-            <div class="top-right">
+            <h1 class="page-title">
+                Verifikasi Pengaduan
+            </h1>
 
-                <div class="search">
-                    <input type="text" placeholder="Cari pengaduan...">
-                </div>
-
-                <div class="profile">
-                    <div class="profile-avatar">
-                        P
-                    </div>
-
-                    <div class="profile-info">
-                        <strong>{{ auth()->user()->nama_lengkap }}</strong>
-                        <span>Petugas</span>
-                    </div>
-                </div>
-
-            </div>
-
-        </header>
+        </div>
 
 
-        <!-- CONTENT -->
-        <section class="content">
+        <!-- SEARCH -->
 
-            <div class="heading">
+        <div class="search">
 
-                <div>
-                    <h2>Daftar Pengaduan Masuk</h2>
-                    <p>
-                        Daftar pengaduan masyarakat yang masuk ke sistem.
-                    </p>
-                </div>
+            <span class="search-icon">
+                ⌕
+            </span>
 
-                <a href="{{ route('petugas.pengaduan.create') }}" class="btn">
-                    + Input Pengaduan
-                </a>
+            <input
+                type="text"
+                placeholder="Cari nomor tiket / judul..."
+            >
 
-            </div>
+        </div>
 
-
-            <div class="card">
-
-                <div class="card-header">
-
-                    <h3>Pengaduan Masyarakat</h3>
-
-                    <span class="total">
-                        Total: {{ $pengaduan->count() }} pengaduan
-                    </span>
-
-                </div>
+    </header>
 
 
-                @if($pengaduan->count() > 0)
+    <!-- CONTENT -->
 
-                    <div class="table-container">
+    <section class="content">
 
-                        <table>
 
-                            <thead>
-                                <tr>
-                                    <th>No. Tiket</th>
-                                    <th>Judul</th>
-                                    <th>Pelapor</th>
-                                    <th>Kategori</th>
-                                    <th>Prioritas</th>
-                                    <th>Status</th>
-                                    <th>Tanggal</th>
-                                    <th>Batas Waktu</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
+        @if($data)
 
-                            <tbody>
+            <div class="verification-grid">
 
-                                @foreach($pengaduan as $item)
 
-                                    <tr>
+                <!-- =================================================
+                     DETAIL PENGADUAN
+                ================================================== -->
 
-                                        <td>
-                                            <span class="ticket">
-                                                {{ $item->no_tiket }}
-                                            </span>
-                                        </td>
+                <div class="complaint-card">
 
-                                        <td>
-                                            {{ $item->judul }}
-                                        </td>
 
-                                        <td>
-                                            {{ $item->nama_pelapor ?? '-' }}
-                                        </td>
+                    <!-- HEADER -->
 
-                                        <td>
-                                            {{ $item->nama_kategori ?? '-' }}
-                                        </td>
+                    <div class="complaint-header">
 
-                                        <td>
+                        <div class="ticket">
 
-                                            @if($item->prioritas === 'tinggi')
-                                                <span class="priority priority-tinggi">
-                                                    Tinggi
-                                                </span>
+                            {{ $data->no_tiket ?? 'SIPMAS-000000000000' }}
 
-                                            @elseif($item->prioritas === 'sedang')
-                                                <span class="priority priority-sedang">
-                                                    Sedang
-                                                </span>
-
-                                            @else
-                                                <span class="priority priority-rendah">
-                                                    {{ ucfirst($item->prioritas ?? 'Rendah') }}
-                                                </span>
-                                            @endif
-
-                                        </td>
-
-                                        <td>
-
-                                            @if($item->status === 'menunggu')
-                                                <span class="status status-menunggu">
-                                                    Menunggu
-                                                </span>
-
-                                            @elseif($item->status === 'selesai')
-                                                <span class="status status-selesai">
-                                                    Selesai
-                                                </span>
-
-                                            @else
-                                                <span class="status status-proses">
-                                                    {{ ucfirst($item->status ?? 'Diproses') }}
-                                                </span>
-                                            @endif
-
-                                        </td>
-
-                                        <td>
-                                            {{ $item->tgl_pengaduan ?? '-' }}
-                                        </td>
-
-                                        <td>
-                                            {{ $item->batas_waktu ?? '-' }}
-                                        </td>
-
-                                        <td>
-                                            <a href="#" class="btn-process">
-                                                Proses
-                                            </a>
-                                        </td>
-
-                                    </tr>
-
-                                @endforeach
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                @else
-
-                    <div class="empty">
-
-                        <div class="empty-icon">
-                            ▤
                         </div>
 
-                        <h3>Belum Ada Pengaduan</h3>
 
-                        <p>
-                            Belum terdapat pengaduan masyarakat yang masuk ke dalam sistem.
-                        </p>
+                        <div class="status-badge">
 
-                        <a href="#" class="btn">
-                            + Input Pengaduan
-                        </a>
+                            Diterima
+
+                        </div>
 
                     </div>
 
-                @endif
+
+                    <!-- JUDUL -->
+
+                    <h2 class="complaint-title">
+
+                        {{ $data->judul ?? '-' }}
+
+                    </h2>
+
+
+                    <!-- INFORMASI -->
+
+                    <div class="information-grid">
+
+
+                        <!-- PELAPOR -->
+
+                        <div>
+
+                            <div class="info-label">
+                                Pelapor
+                            </div>
+
+                            <div class="info-value">
+
+                                {{ $data->nama_pelapor ?? '-' }}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- KATEGORI -->
+
+                        <div>
+
+                            <div class="info-label">
+                                Kategori
+                            </div>
+
+                            <div class="info-value">
+
+                                {{ $data->nama_kategori ?? '-' }}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- LOKASI -->
+
+                        <div>
+
+                            <div class="info-label">
+                                Lokasi
+                            </div>
+
+                            <div class="info-value">
+
+                                {{ $data->lokasi_kejadian ?? '-' }}
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- URAIAN -->
+
+                    <div class="description">
+
+                        <div class="description-label">
+                            Uraian
+                        </div>
+
+                        <div class="description-text">
+
+                            {{ $data->uraian ?? '-' }}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FOTO -->
+
+                    <div class="photos">
+
+                        <div class="photo"></div>
+
+                        <div class="photo second"></div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     FORM VERIFIKASI
+                ================================================== -->
+
+                <div class="verification-card">
+
+
+                    <h2 class="verification-title">
+                        Verifikasi pengaduan
+                    </h2>
+
+
+                    <!-- CHECKLIST -->
+
+                    <div class="check-list">
+
+
+                        <label class="check-item">
+
+                            <input
+                                type="checkbox"
+                                name="data_pelapor"
+                            >
+
+                            <span>
+                                Data pelapor lengkap
+                            </span>
+
+                        </label>
+
+
+                        <label class="check-item">
+
+                            <input
+                                type="checkbox"
+                                name="lokasi_jelas"
+                            >
+
+                            <span>
+                                Lokasi kejadian jelas
+                            </span>
+
+                        </label>
+
+
+                        <label class="check-item">
+
+                            <input
+                                type="checkbox"
+                                name="foto_sesuai"
+                            >
+
+                            <span>
+                                Foto sesuai dengan uraian
+                            </span>
+
+                        </label>
+
+
+                        <label class="check-item">
+
+                            <input
+                                type="checkbox"
+                                name="wilayah_kelurahan"
+                            >
+
+                            <span>
+                                Berada dalam wilayah kelurahan
+                            </span>
+
+                        </label>
+
+
+                    </div>
+
+
+                    <!-- HASIL -->
+
+                    <div class="result-title">
+                        Hasil verifikasi
+                    </div>
+
+
+                    <div class="result-options">
+
+                        <button
+                            type="button"
+                            class="result-btn active"
+                        >
+                            Valid
+                        </button>
+
+                        <button
+                            type="button"
+                            class="result-btn"
+                        >
+                            Tidak valid
+                        </button>
+
+                    </div>
+
+
+                    <!-- ACTION -->
+
+                    <div class="action-buttons">
+
+                        <button
+                            type="button"
+                            class="btn btn-verifikasi"
+                        >
+                            ✓ Verifikasi
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="btn btn-tolak"
+                        >
+                            × Tolak
+                        </button>
+
+                    </div>
+
+
+                </div>
 
             </div>
 
-        </section>
 
-    </main>
+        @else
 
-</div>
+
+            <!-- =================================================
+                 TIDAK ADA PENGADUAN
+            ================================================== -->
+
+            <div class="empty-card">
+
+                <h3>
+                    Tidak ada pengaduan yang perlu diverifikasi
+                </h3>
+
+                <p>
+                    Pengaduan baru akan muncul di halaman ini.
+                </p>
+
+            </div>
+
+
+        @endif
+
+
+    </section>
+
+</main>
 
 </body>
 </html>

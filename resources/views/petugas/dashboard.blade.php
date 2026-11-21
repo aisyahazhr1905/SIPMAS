@@ -7,431 +7,938 @@
     <title>Dashboard Petugas - SIPMAS</title>
 
     <style>
+        /* =====================================================
+           RESET
+        ===================================================== */
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html,
+        body {
+            min-height: 100%;
         }
 
         body {
-            background: #f5f7fb;
-            color: #1f2937;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #263b50;
+            font-size: 15px;
         }
 
-        .layout {
-            display: flex;
-            min-height: 100vh;
-        }
 
-        /* ================= SIDEBAR ================= */
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
 
         .sidebar {
-            width: 245px;
-            background: #172554;
-            color: white;
-            height: 100vh;
             position: fixed;
             left: 0;
             top: 0;
-            bottom: 0;
+
+            width: 270px;
+            height: 100vh;
+
+            background: #12314a;
+            color: white;
+
+            padding: 30px 20px;
+
+            z-index: 100;
+
             overflow-y: auto;
             overflow-x: hidden;
+
+            display: flex;
+            flex-direction: column;
         }
 
-        .logo {
-            padding: 25px 22px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+
+        /* LOGO */
+
+        .brand {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 0 14px 25px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.14);
+
+            flex-shrink: 0;
         }
 
-        .logo h2 {
-            font-size: 20px;
-            margin-bottom: 5px;
+        .brand-logo {
+            width: 45px;
+            height: 45px;
+
+            background: white;
+
+            border-radius: 9px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #376d9e;
+
+            font-size: 21px;
+            font-weight: bold;
+
+            flex-shrink: 0;
         }
 
-        .logo p {
-            font-size: 12px;
-            color: #cbd5e1;
+        .brand-text strong {
+            display: block;
+
+            color: white;
+
+            font-size: 23px;
+
+            line-height: 1.1;
         }
 
-        .menu {
-            padding: 20px 12px;
+        .brand-text small {
+            display: block;
+
+            color: #b8c8d6;
+
+            font-size: 11px;
+
+            margin-top: 5px;
         }
+
+
+        /* JUDUL MENU */
 
         .menu-title {
-            font-size: 11px;
-            color: #94a3b8;
+            margin: 35px 14px 16px;
+
+            color: #8298aa;
+
+            font-size: 12px;
+
             text-transform: uppercase;
-            margin: 10px 12px;
-            letter-spacing: 0.5px;
+
+            letter-spacing: 0.4px;
+        }
+
+
+        /* MENU */
+
+        .menu {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
         }
 
         .menu a {
+            min-height: 52px;
+
+            padding: 0 14px;
+
+            border-radius: 8px;
+
             display: flex;
+
             align-items: center;
+
             gap: 12px;
+
+            color: #b7c6d3;
+
             text-decoration: none;
-            color: #dbeafe;
-            padding: 12px 13px;
-            margin-bottom: 5px;
-            border-radius: 7px;
-            font-size: 13px;
+
+            font-size: 16px;
+
             transition: 0.2s;
         }
 
         .menu a:hover {
-            background: #1e3a8a;
+            background: #28587f;
+
             color: white;
         }
 
         .menu a.active {
-            background: #2563eb;
+            background: #376f9f;
+
             color: white;
+
+            font-weight: 600;
         }
 
-        .icon {
-            width: 20px;
+        .menu-icon {
+            width: 24px;
+
             text-align: center;
-            font-size: 15px;
+
+            font-size: 20px;
+
+            color: #b9cbd9;
+
+            flex-shrink: 0;
         }
 
-        .logout {
-            position: sticky;
-            bottom: 0;
-            left: 12px;
-            right: 12px;
-            padding: 10px 12px 20px;
-            background: #172554;
-        }
-
-        .logout button {
-            width: 100%;
-            border: none;
-            background: #1e3a8a;
-            color: #dbeafe;
-            padding: 11px;
-            border-radius: 7px;
-            cursor: pointer;
-            font-size: 13px;
-        }
-
-        .logout button:hover {
-            background: #dc2626;
+        .menu a.active .menu-icon {
             color: white;
         }
 
-        /* ================= CONTENT ================= */
+        .menu-label {
+            flex: 1;
 
-        .main {
-            margin-left: 245px;
-            width: calc(100% - 245px);
-            min-height: 100vh;
+            line-height: 1.3;
         }
 
-        /* ================= TOPBAR ================= */
 
-        .topbar {
-            height: 70px;
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
+        /* BADGE */
+
+        .badge {
+            width: 22px;
+            height: 22px;
+
+            border-radius: 50%;
+
+            background: #ef5962;
+
+            color: white;
+
             display: flex;
+
             align-items: center;
-            justify-content: space-between;
-            padding: 0 30px;
+
+            justify-content: center;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            flex-shrink: 0;
         }
 
-        .page-title h1 {
-            font-size: 21px;
-            color: #111827;
-            margin-bottom: 4px;
-        }
 
-        .page-title p {
-            font-size: 12px;
-            color: #6b7280;
-        }
-
-        .top-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .search {
-            width: 220px;
-            position: relative;
-        }
-
-        .search input {
-            width: 100%;
-            border: 1px solid #e5e7eb;
-            border-radius: 7px;
-            padding: 9px 12px;
-            outline: none;
-            font-size: 12px;
-            background: #f9fafb;
-        }
+        /* =====================================================
+           PROFIL PETUGAS
+        ===================================================== */
 
         .profile {
+            margin-top: auto;
+
+            padding: 20px 8px 0;
+
+            border-top: 1px solid rgba(255,255,255,0.14);
+
             display: flex;
+
             align-items: center;
-            gap: 10px;
+
+            gap: 12px;
         }
 
         .profile-avatar {
-            width: 36px;
-            height: 36px;
-            background: #2563eb;
+            width: 42px;
+            height: 42px;
+
             border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+
+            background: #376fa2;
+
             color: white;
-            font-weight: bold;
-            font-size: 13px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            flex-shrink: 0;
+        }
+
+        .profile-info {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 4px;
         }
 
         .profile-info strong {
-            display: block;
-            font-size: 12px;
-            color: #111827;
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 600;
         }
 
         .profile-info span {
-            font-size: 10px;
-            color: #6b7280;
-        }
+            color: #9db0c1;
 
-        /* ================= CONTENT AREA ================= */
-
-        .content {
-            padding: 28px 30px;
-        }
-
-        .welcome {
-            margin-bottom: 25px;
-        }
-
-        .welcome h2 {
-            font-size: 20px;
-            margin-bottom: 6px;
-            color: #111827;
-        }
-
-        .welcome p {
             font-size: 13px;
-            color: #6b7280;
         }
 
-        /* ================= STAT CARDS ================= */
 
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
-            margin-bottom: 25px;
+        /* LOGOUT */
+
+        .logout-form {
+            margin: 20px 8px 5px;
         }
 
-        .stat-card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 9px;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .logout-btn {
+            border: none;
+
+            background: transparent;
+
+            color: #9fb1c0;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            padding: 0;
         }
 
-        .stat-info p {
-            font-size: 12px;
-            color: #6b7280;
-            margin-bottom: 9px;
-        }
+        .logout-btn span {
+            margin-right: 7px;
 
-        .stat-info h3 {
-            font-size: 25px;
-            color: #111827;
-        }
-
-        .stat-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             font-size: 18px;
         }
 
-        .blue {
-            background: #dbeafe;
-            color: #2563eb;
+        .logout-btn:hover {
+            color: white;
         }
 
-        .yellow {
-            background: #fef3c7;
-            color: #d97706;
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+            margin-left: 270px;
+
+            min-height: 100vh;
+
+            padding: 30px 34px 50px;
         }
 
-        .orange {
-            background: #ffedd5;
-            color: #ea580c;
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .topbar {
+            min-height: 70px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 25px;
         }
 
-        .green {
-            background: #dcfce7;
-            color: #16a34a;
+        .breadcrumb {
+            font-size: 13px;
+
+            color: #8fa1b3;
+
+            margin-bottom: 6px;
         }
 
-        /* ================= MAIN GRID ================= */
+        .page-title {
+            font-size: 30px;
 
-        .dashboard-grid {
+            color: #263c52;
+
+            font-weight: 700;
+
+            line-height: 1.2;
+        }
+
+
+        /* SEARCH */
+
+        .search {
+            width: 260px;
+
+            height: 48px;
+
+            background: white;
+
+            border: 1px solid #dfe6ed;
+
+            border-radius: 7px;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 0 14px;
+
+            color: #9ba9b7;
+
+            font-size: 14px;
+
+            flex-shrink: 0;
+        }
+
+        .search-icon {
+            margin-right: 8px;
+
+            font-size: 18px;
+        }
+
+
+        /* =====================================================
+           ALERT
+        ===================================================== */
+
+        .alert {
+            min-height: 55px;
+
+            background: #fff5df;
+
+            border: 1px solid #f1d99f;
+
+            border-radius: 7px;
+
+            color: #a16c19;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 0 18px;
+
+            font-size: 14px;
+
+            margin-bottom: 22px;
+        }
+
+
+        /* =====================================================
+           STATISTIK
+        ===================================================== */
+
+        .stats {
             display: grid;
-            grid-template-columns: 2fr 1fr;
+
+            grid-template-columns: repeat(4, 1fr);
+
             gap: 20px;
+
+            margin-bottom: 22px;
         }
+
+        .stat {
+            min-height: 108px;
+
+            background: white;
+
+            border: 1px solid #e1e7ed;
+
+            border-radius: 9px;
+
+            padding: 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+        .stat-icon {
+            width: 55px;
+            height: 55px;
+
+            border-radius: 10px;
+
+            background: #e9f0f8;
+
+            color: #3b71a3;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            font-size: 22px;
+
+            flex-shrink: 0;
+        }
+
+        .stat-icon.yellow {
+            background: #fff2d4;
+
+            color: #e2a62e;
+        }
+
+        .stat-icon.red {
+            background: #ffe2e2;
+
+            color: #dc5b62;
+        }
+
+        .stat-number {
+            font-size: 30px;
+
+            line-height: 1;
+
+            font-weight: 700;
+
+            color: #263d54;
+
+            margin-bottom: 7px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+
+            color: #8e9dac;
+        }
+
+
+        /* =====================================================
+           CARD
+        ===================================================== */
 
         .card {
             background: white;
-            border: 1px solid #e5e7eb;
+
+            border: 1px solid #e1e7ed;
+
             border-radius: 9px;
+
             overflow: hidden;
         }
 
         .card-header {
-            padding: 17px 20px;
-            border-bottom: 1px solid #e5e7eb;
+            min-height: 78px;
+
             display: flex;
+
             justify-content: space-between;
+
+            align-items: center;
+
+            padding: 0 20px;
+
+            border-bottom: 1px solid #edf1f5;
+
+            gap: 15px;
+        }
+
+        .card-title {
+            font-size: 20px;
+
+            font-weight: 600;
+
+            color: #2c4359;
+        }
+
+        .card-actions {
+            display: flex;
+
+            gap: 12px;
+
             align-items: center;
         }
 
-        .card-header h3 {
-            font-size: 14px;
-            color: #111827;
+
+        /* FILTER */
+
+        .filter {
+            height: 45px;
+
+            border: 1px solid #dce4ec;
+
+            background: white;
+
+            border-radius: 7px;
+
+            padding: 0 15px;
+
+            color: #41647f;
+
+            font-size: 13px;
+
+            cursor: pointer;
         }
 
-        .card-header a {
-            font-size: 11px;
-            color: #2563eb;
+
+        /* BUTTON TAMBAH */
+
+        .add {
+            height: 45px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #356b9d;
+
+            color: white;
+
+            padding: 0 18px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
             text-decoration: none;
+
+            display: flex;
+
+            align-items: center;
+
+            white-space: nowrap;
         }
 
-        /* ================= TABLE ================= */
+        .add:hover {
+            background: #285c8c;
+        }
 
-        .table-container {
+
+        /* =====================================================
+           TABLE
+        ===================================================== */
+
+        .table-wrapper {
             overflow-x: auto;
         }
 
         table {
             width: 100%;
+
             border-collapse: collapse;
+
+            min-width: 950px;
         }
 
         th {
-            background: #f9fafb;
-            color: #6b7280;
-            font-size: 10px;
+            height: 50px;
+
+            padding: 0 16px;
+
+            background: #fafbfd;
+
+            color: #8797a7;
+
+            font-size: 11px;
+
             text-align: left;
-            padding: 12px 15px;
+
             text-transform: uppercase;
+
+            font-weight: 600;
+
+            white-space: nowrap;
         }
 
         td {
-            padding: 13px 15px;
-            border-top: 1px solid #f1f5f9;
-            font-size: 11px;
-            color: #374151;
+            height: 58px;
+
+            padding: 0 16px;
+
+            border-top: 1px solid #edf1f5;
+
+            color: #516579;
+
+            font-size: 14px;
+
+            white-space: nowrap;
         }
 
-        .status {
-            display: inline-block;
-            padding: 5px 8px;
-            border-radius: 20px;
-            font-size: 9px;
-            font-weight: bold;
+        .ticket {
+            color: #316a9f;
+
+            font-weight: 700;
+
+            font-size: 13px;
         }
 
-        .status-warning {
-            background: #fef3c7;
-            color: #92400e;
-        }
 
-        .status-process {
-            background: #dbeafe;
-            color: #1d4ed8;
-        }
+        /* =====================================================
+           STATUS
+        ===================================================== */
 
-        .status-success {
-            background: #dcfce7;
-            color: #166534;
-        }
+        .pill {
+            display: inline-flex;
 
-        /* ================= QUICK ACTION ================= */
-
-        .quick-actions {
-            padding: 20px;
-        }
-
-        .action {
-            display: flex;
             align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: #374151;
-            padding: 12px;
-            border: 1px solid #e5e7eb;
-            border-radius: 7px;
-            margin-bottom: 10px;
-            font-size: 12px;
-            transition: 0.2s;
-        }
 
-        .action:hover {
-            border-color: #2563eb;
-            background: #eff6ff;
-            color: #1d4ed8;
-        }
-
-        .action-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            background: #eff6ff;
-            color: #2563eb;
-            display: flex;
-            align-items: center;
             justify-content: center;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
         }
 
-        /* ================= RESPONSIVE ================= */
+        .priority-rendah {
+            background: #d9f2e5;
 
-        @media (max-width: 1000px) {
+            color: #287a58;
+        }
+
+        .priority-sedang {
+            background: #fff0d0;
+
+            color: #a87516;
+        }
+
+        .priority-tinggi {
+            background: #ffdede;
+
+            color: #d34e56;
+        }
+
+        .status-diajukan,
+        .status-diverifikasi {
+            background: #e3edf8;
+
+            color: #356d9f;
+        }
+
+        .status-diproses {
+            background: #fff0d1;
+
+            color: #ad7516;
+        }
+
+        .status-diteruskan {
+            background: #e8e4f7;
+
+            color: #6656a0;
+        }
+
+        .status-selesai {
+            background: #dff3e7;
+
+            color: #287957;
+        }
+
+        .status-ditolak {
+            background: #ffe0e0;
+
+            color: #cc4d55;
+        }
+
+        .late {
+            color: #e95258;
+
+            font-weight: 600;
+        }
+
+
+        /* PROSES */
+
+        .process {
+            border: 1px solid #dce5ed;
+
+            background: white;
+
+            color: #3970a2;
+
+            border-radius: 15px;
+
+            padding: 7px 13px;
+
+            font-size: 12px;
+
+            cursor: pointer;
+        }
+
+        .process:hover {
+            background: #f1f6fa;
+        }
+
+
+        /* =====================================================
+           PAGINATION
+        ===================================================== */
+
+        .pagination {
+            height: 65px;
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 0 18px;
+        }
+
+        .page {
+            width: 34px;
+            height: 34px;
+
+            border: 1px solid #dce4ec;
+
+            background: white;
+
+            border-radius: 6px;
+
+            color: #8c9baa;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 13px;
+        }
+
+        .page.active {
+            background: #356b9d;
+
+            border-color: #356b9d;
+
+            color: white;
+        }
+
+
+        /* =====================================================
+           SCROLLBAR SIDEBAR
+        ===================================================== */
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: #102d44;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #376f9f;
+            border-radius: 10px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1200px) {
+
+            .main {
+                padding-left: 25px;
+                padding-right: 25px;
+            }
+
             .stats {
                 grid-template-columns: repeat(2, 1fr);
             }
-
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
         }
 
-        @media (max-width: 700px) {
+
+        @media (max-width: 900px) {
+
             .sidebar {
-                width: 200px;
+                width: 235px;
             }
 
             .main {
-                margin-left: 200px;
-                width: calc(100% - 200px);
+                margin-left: 235px;
             }
 
-            .top-right .search {
-                display: none;
+            .page-title {
+                font-size: 27px;
+            }
+
+            .search {
+                width: 220px;
+            }
+        }
+
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                min-height: auto;
+
+                overflow: visible;
+            }
+
+            .main {
+                margin-left: 0;
+
+                padding: 22px 18px 40px;
             }
 
             .stats {
                 grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+            .search {
+                width: 100%;
+            }
+
+            .page-title {
+                font-size: 26px;
+            }
+
+            .card-header {
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                padding-top: 18px;
+
+                padding-bottom: 18px;
+            }
+
+            .card-actions {
+                width: 100%;
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+            .filter,
+            .add {
+                width: 100%;
+
+                justify-content: center;
+            }
+
+            .profile {
+                margin-top: 40px;
+            }
+
+            .logout-form {
+                margin-top: 18px;
             }
         }
     </style>
@@ -439,347 +946,586 @@
 
 <body>
 
-<div class="layout">
 
-    <!-- SIDEBAR -->
+    <!-- =====================================================
+         SIDEBAR
+    ===================================================== -->
+
     <aside class="sidebar">
 
-        <div class="logo">
-            <h2>SIPMAS</h2>
-            <p>Sistem Informasi Pengaduan Masyarakat</p>
+
+        <!-- LOGO -->
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                ✥
+            </div>
+
+            <div class="brand-text">
+
+                <strong>SIPMAS</strong>
+
+                <small>
+                    Kelurahan Sungai Bangek
+                </small>
+
+            </div>
+
         </div>
+
+
+        <!-- MENU -->
+
+        <div class="menu-title">
+            PELAYANAN
+        </div>
+
 
         <nav class="menu">
 
-            <div class="menu-title">Menu Utama</div>
 
-            <a href="{{ route('petugas.dashboard') }}" class="active">
-                <span class="icon">▦</span>
-                <span>Dashboard</span>
+            <!-- DASHBOARD -->
+
+            <a
+                href="{{ route('petugas.dashboard') }}"
+                class="active"
+            >
+
+                <span class="menu-icon">
+                    ▦
+                </span>
+
+                <span class="menu-label">
+                    Dashboard
+                </span>
+
             </a>
+
+
+            <!-- PENGADUAN MASUK -->
 
             <a href="{{ route('petugas.pengaduan.index') }}">
-                <span class="icon">▤</span>
-                <span>Pengaduan Masuk</span>
+
+                <span class="menu-icon">
+                    ▱
+                </span>
+
+                <span class="menu-label">
+                    Pengaduan<br>Masuk
+                </span>
+
+                <span class="badge">
+                    {{ $pengaduan->where('status', 'diajukan')->count() }}
+                </span>
+
             </a>
 
-            <a href="#">
-                <span class="icon">＋</span>
-                <span>Input Pengaduan</span>
+
+            <!-- INPUT PENGADUAN -->
+
+            <a href="{{ route('petugas.pengaduan.create') }}">
+
+                <span class="menu-icon">
+                    ⌑
+                </span>
+
+                <span class="menu-label">
+                    Input Pengaduan
+                </span>
+
             </a>
 
-            <div class="menu-title">Pengelolaan</div>
 
-            <a href="#">
-                <span class="icon">✓</span>
-                <span>Verifikasi Pengaduan</span>
+            <!-- DATA PENGADUAN -->
+
+            <a href="{{ route('petugas.pengaduan.index') }}">
+
+                <span class="menu-icon">
+                    ▤
+                </span>
+
+                <span class="menu-label">
+                    Data Pengaduan
+                </span>
+
             </a>
 
+
+            <!-- LAPORAN -->
+
             <a href="#">
-                <span class="icon">◆</span>
-                <span>Prioritas & Penerusan</span>
+
+                <span class="menu-icon">
+                    ⌁
+                </span>
+
+                <span class="menu-label">
+                    Laporan
+                </span>
+
             </a>
 
-            <a href="#">
-                <span class="icon">↻</span>
-                <span>Status & Tanggapan</span>
-            </a>
+
+            <!-- NOTIFIKASI -->
 
             <a href="#">
-                <span class="icon">▣</span>
-                <span>Arsip Pengaduan</span>
-            </a>
 
-            <div class="menu-title">Laporan</div>
+                <span class="menu-icon">
+                    ♧
+                </span>
 
-            <a href="#">
-                <span class="icon">▥</span>
-                <span>Laporan Rekapitulasi</span>
+                <span class="menu-label">
+                    Notifikasi
+                </span>
+
+                <span class="badge">
+                    3
+                </span>
+
             </a>
 
         </nav>
 
-        <div class="logout">
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
 
-                <button type="submit">
-                    ⇥ &nbsp; Keluar
-                </button>
-            </form>
+        <!-- =================================================
+             PROFIL PETUGAS
+        ================================================== -->
+
+        <div class="profile">
+
+            <div class="profile-avatar">
+                BS
+            </div>
+
+            <div class="profile-info">
+
+                <strong>
+                    Budi Santoso
+                </strong>
+
+                <span>
+                    Petugas
+                </span>
+
+            </div>
+
         </div>
+
+
+        <!-- LOGOUT -->
+
+        <form
+            action="{{ route('logout') }}"
+            method="POST"
+            class="logout-form"
+        >
+
+            @csrf
+
+            <button
+                type="submit"
+                class="logout-btn"
+            >
+
+                <span>
+                    →
+                </span>
+
+                Keluar
+
+            </button>
+
+        </form>
 
     </aside>
 
 
-    <!-- MAIN -->
+    <!-- =====================================================
+         MAIN CONTENT
+    ===================================================== -->
+
     <main class="main">
 
-        <!-- TOPBAR -->
-        <header class="topbar">
 
-            <div class="page-title">
-                <h1>Dashboard Petugas</h1>
-                <p>Kelola pengaduan masyarakat</p>
+        <!-- HEADER -->
+
+        <div class="topbar">
+
+            <div>
+
+                <div class="breadcrumb">
+                    Petugas / Dashboard
+                </div>
+
+                <h1 class="page-title">
+                    Dashboard Petugas
+                </h1>
+
             </div>
 
-            <div class="top-right">
 
-                <div class="search">
-                    <input
-                        type="text"
-                        placeholder="Cari pengaduan..."
+            <div class="search">
+
+                <span class="search-icon">
+                    ⌕
+                </span>
+
+                <span>
+                    Cari nomor tiket / judul...
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ALERT -->
+
+        <div class="alert">
+
+            ⚠
+
+            &nbsp;&nbsp;
+
+            2 pengaduan melewati batas waktu dan belum ditindaklanjuti.
+
+        </div>
+
+
+        <!-- =================================================
+             STATISTIK
+        ================================================== -->
+
+        <div class="stats">
+
+
+            <!-- PENGADUAN BARU -->
+
+            <div class="stat">
+
+                <div class="stat-icon">
+                    ✉
+                </div>
+
+                <div>
+
+                    <div class="stat-number">
+                        {{ $pengaduan->where('status', 'diajukan')->count() }}
+                    </div>
+
+                    <div class="stat-label">
+                        Pengaduan baru
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PERLU VERIFIKASI -->
+
+            <div class="stat">
+
+                <div class="stat-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <div class="stat-number">
+                        {{ $pengaduan->where('status', 'diajukan')->count() }}
+                    </div>
+
+                    <div class="stat-label">
+                        Perlu verifikasi
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SEDANG DIPROSES -->
+
+            <div class="stat">
+
+                <div class="stat-icon yellow">
+                    ◷
+                </div>
+
+                <div>
+
+                    <div class="stat-number">
+                        {{ $pengaduan->where('status', 'diproses')->count() }}
+                    </div>
+
+                    <div class="stat-label">
+                        Sedang diproses
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRIORITAS TINGGI -->
+
+            <div class="stat">
+
+                <div class="stat-icon red">
+                    ⚑
+                </div>
+
+                <div>
+
+                    <div class="stat-number">
+                        {{ $pengaduan->where('prioritas', 'tinggi')->count() }}
+                    </div>
+
+                    <div class="stat-label">
+                        Prioritas tinggi
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PENGADUAN MASUK
+        ================================================== -->
+
+        <div class="card">
+
+
+            <!-- CARD HEADER -->
+
+            <div class="card-header">
+
+                <div class="card-title">
+                    Pengaduan masuk
+                </div>
+
+
+                <div class="card-actions">
+
+                    <button
+                        type="button"
+                        class="filter"
                     >
-                </div>
-
-                <div class="profile">
-
-                    <div class="profile-avatar">
-                        P
-                    </div>
-
-                    <div class="profile-info">
-                        <strong>{{ auth()->user()->nama_lengkap }}</strong>
-                        <span>Petugas</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </header>
+                        Semua status ▾
+                    </button>
 
 
-        <!-- CONTENT -->
-        <section class="content">
-
-            <div class="welcome">
-                <h2>Selamat Datang, {{ auth()->user()->nama_lengkap }}</h2>
-                <p>
-                    Pantau dan kelola pengaduan masyarakat melalui dashboard petugas.
-                </p>
-            </div>
-
-
-            <!-- STATISTIK -->
-            <div class="stats">
-
-                <div class="stat-card">
-
-                    <div class="stat-info">
-                        <p>Total Pengaduan</p>
-                        <h3>24</h3>
-                    </div>
-
-                    <div class="stat-icon blue">
-                        ▤
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <div class="stat-info">
-                        <p>Menunggu Verifikasi</p>
-                        <h3>8</h3>
-                    </div>
-
-                    <div class="stat-icon yellow">
-                        !
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <div class="stat-info">
-                        <p>Sedang Diproses</p>
-                        <h3>10</h3>
-                    </div>
-
-                    <div class="stat-icon orange">
-                        ↻
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <div class="stat-info">
-                        <p>Pengaduan Selesai</p>
-                        <h3>6</h3>
-                    </div>
-
-                    <div class="stat-icon green">
-                        ✓
-                    </div>
+                    <a
+                        href="{{ route('petugas.pengaduan.create') }}"
+                        class="add"
+                    >
+                        + Input Pengaduan Warga
+                    </a>
 
                 </div>
 
             </div>
 
 
-            <!-- BAGIAN BAWAH -->
-            <div class="dashboard-grid">
+            <!-- TABLE -->
 
-                <!-- PENGADUAN TERBARU -->
-                <div class="card">
+            <div class="table-wrapper">
 
-                    <div class="card-header">
-                        <h3>Pengaduan Terbaru</h3>
+                <table>
 
-                        <a href="#">
-                            Lihat Semua
-                        </a>
-                    </div>
+                    <thead>
 
-                    <div class="table-container">
+                        <tr>
 
-                        <table>
+                            <th>
+                                No. Tiket
+                            </th>
 
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Pengadu</th>
-                                    <th>Kategori</th>
-                                    <th>Tanggal</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
+                            <th>
+                                Judul
+                            </th>
 
-                            <tbody>
+                            <th>
+                                Pelapor
+                            </th>
 
-                                <tr>
-                                    <td>01</td>
-                                    <td>Ahmad Fauzi</td>
-                                    <td>Infrastruktur</td>
-                                    <td>20 Nov 2026</td>
-                                    <td>
-                                        <span class="status status-warning">
-                                            Menunggu
-                                        </span>
-                                    </td>
-                                </tr>
+                            <th>
+                                Kategori
+                            </th>
 
-                                <tr>
-                                    <td>02</td>
-                                    <td>Siti Rahma</td>
-                                    <td>Pelayanan</td>
-                                    <td>20 Nov 2026</td>
-                                    <td>
-                                        <span class="status status-process">
-                                            Diproses
-                                        </span>
-                                    </td>
-                                </tr>
+                            <th>
+                                Prioritas
+                            </th>
 
-                                <tr>
-                                    <td>03</td>
-                                    <td>Andi Saputra</td>
-                                    <td>Kebersihan</td>
-                                    <td>19 Nov 2026</td>
-                                    <td>
-                                        <span class="status status-success">
-                                            Selesai
-                                        </span>
-                                    </td>
-                                </tr>
+                            <th>
+                                Status
+                            </th>
 
-                                <tr>
-                                    <td>04</td>
-                                    <td>Dewi Lestari</td>
-                                    <td>Administrasi</td>
-                                    <td>19 Nov 2026</td>
-                                    <td>
-                                        <span class="status status-warning">
-                                            Menunggu
-                                        </span>
-                                    </td>
-                                </tr>
+                            <th>
+                                Batas Waktu
+                            </th>
 
-                            </tbody>
+                            <th>
+                                Aksi
+                            </th>
 
-                        </table>
+                        </tr>
 
-                    </div>
+                    </thead>
 
+
+                    <tbody>
+
+                        @forelse($pengaduan->take(5) as $item)
+
+                            <tr>
+
+                                <td>
+
+                                    <span class="ticket">
+                                        {{ $item->no_tiket }}
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+                                    {{ \Illuminate\Support\Str::limit($item->judul, 30) }}
+                                </td>
+
+
+                                <td>
+                                    {{ $item->nama_pelapor ?? '-' }}
+                                </td>
+
+
+                                <td>
+                                    {{ $item->nama_kategori ?? '-' }}
+                                </td>
+
+
+                                <td>
+
+                                    <span
+                                        class="pill priority-{{ $item->prioritas }}"
+                                    >
+                                        {{ ucfirst($item->prioritas) }}
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span
+                                        class="pill status-{{ $item->status }}"
+                                    >
+                                        {{ ucfirst($item->status) }}
+                                    </span>
+
+                                </td>
+
+
+                                <td
+                                    class="
+                                    @if(
+                                        $item->batas_waktu &&
+                                        $item->batas_waktu < now()->toDateString() &&
+                                        $item->status != 'selesai'
+                                    )
+                                        late
+                                    @endif
+                                    "
+                                >
+
+                                    @if($item->batas_waktu)
+
+                                        {{
+                                            \Carbon\Carbon::parse(
+                                                $item->batas_waktu
+                                            )->format('d M Y')
+                                        }}
+
+                                    @else
+
+                                        -
+
+                                    @endif
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="process"
+                                    >
+                                        Proses
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+                        @empty
+
+                            <tr>
+
+                                <td
+                                    colspan="8"
+                                    style="
+                                        text-align:center;
+                                        padding:40px;
+                                        font-size:14px;
+                                    "
+                                >
+
+                                    Belum ada pengaduan masuk.
+
+                                </td>
+
+                            </tr>
+
+                        @endforelse
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- PAGINATION -->
+
+            <div class="pagination">
+
+                <div class="page">
+                    ‹
                 </div>
 
+                <div class="page active">
+                    1
+                </div>
 
-                <!-- AKSI CEPAT -->
-                <div class="card">
+                <div class="page">
+                    2
+                </div>
 
-                    <div class="card-header">
-                        <h3>Aksi Cepat</h3>
-                    </div>
-
-                    <div class="quick-actions">
-
-                        <a href="#" class="action">
-
-                            <span class="action-icon">
-                                ＋
-                            </span>
-
-                            <span>
-                                Input Pengaduan Atas Nama Warga
-                            </span>
-
-                        </a>
-
-
-                        <a href="#" class="action">
-
-                            <span class="action-icon">
-                                ✓
-                            </span>
-
-                            <span>
-                                Verifikasi Pengaduan
-                            </span>
-
-                        </a>
-
-
-                        <a href="#" class="action">
-
-                            <span class="action-icon">
-                                ◆
-                            </span>
-
-                            <span>
-                                Prioritas & Penerusan
-                            </span>
-
-                        </a>
-
-
-                        <a href="#" class="action">
-
-                            <span class="action-icon">
-                                ▥
-                            </span>
-
-                            <span>
-                                Lihat Laporan
-                            </span>
-
-                        </a>
-
-                    </div>
-
+                <div class="page">
+                    ›
                 </div>
 
             </div>
 
-        </section>
+        </div>
 
     </main>
-
-</div>
 
 </body>
 </html>
