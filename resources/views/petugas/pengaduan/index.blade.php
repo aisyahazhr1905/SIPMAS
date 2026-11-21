@@ -1001,16 +1001,9 @@
 
         <!-- DATA PENGADUAN -->
 
-        <a href="{{ route('petugas.pengaduan.index') }}">
-
-            <span class="menu-icon">
-                ▤
-            </span>
-
-            <span class="menu-label">
-                Data Pengaduan
-            </span>
-
+        <a href="{{ route('petugas.pengaduan.data') }}">
+            <span class="menu-icon">▤</span>
+            <span>Data Pengaduan</span>
         </a>
 
 
