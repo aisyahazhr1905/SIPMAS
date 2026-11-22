@@ -7,7 +7,6 @@
     <title>Verifikasi Pengaduan - SIPMAS</title>
 
     <style>
-
         * {
             margin: 0;
             padding: 0;
@@ -51,7 +50,6 @@
         .brand {
             display: flex;
             align-items: center;
-
             gap: 13px;
 
             padding: 0 14px 25px;
@@ -672,6 +670,12 @@
             font-size: 8px;
 
             cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .result-btn:hover {
+            background: #eef5fb;
         }
 
         .result-btn.active {
@@ -708,6 +712,8 @@
             font-weight: 600;
 
             cursor: pointer;
+
+            transition: 0.2s;
         }
 
         .btn-verifikasi {
@@ -724,6 +730,62 @@
 
         .btn-tolak:hover {
             background: #b92b27;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+
+            cursor: not-allowed;
+        }
+
+        /* =====================================================
+           ALERT
+        ===================================================== */
+
+        .alert {
+            padding: 12px 15px;
+
+            border-radius: 6px;
+
+            margin-bottom: 15px;
+
+            font-size: 12px;
+        }
+
+        .alert-success {
+            background: #e8f7ef;
+
+            border: 1px solid #bce8d0;
+
+            color: #197345;
+        }
+
+        .alert-error {
+            background: #fdecec;
+
+            border: 1px solid #f3c2c2;
+
+            color: #a52c2c;
+        }
+
+        .validation-errors {
+            background: #fdecec;
+
+            border: 1px solid #f3c2c2;
+
+            color: #a52c2c;
+
+            padding: 12px 15px;
+
+            border-radius: 6px;
+
+            margin-bottom: 15px;
+
+            font-size: 11px;
+        }
+
+        .validation-errors ul {
+            margin-left: 18px;
         }
 
         /* =====================================================
@@ -847,14 +909,12 @@
                 font-size: 13px;
             }
         }
-
     </style>
 </head>
 
 <body>
 
 @php
-
     /*
     |--------------------------------------------------------------------------
     | Ambil pengaduan yang akan diverifikasi
@@ -866,44 +926,25 @@
 
     if (isset($pengaduan)) {
 
-        /*
-        | Controller menggunakan ->get(),
-        | jadi $pengaduan adalah Collection.
-        */
-
         if ($pengaduan instanceof \Illuminate\Support\Collection) {
 
             $jumlahPengaduan = $pengaduan->count();
 
-            /*
-            | Prioritaskan pengaduan dengan status diajukan.
-            */
+            // Prioritaskan pengaduan yang masih diajukan
+            $data = $pengaduan->firstWhere('status', 'diajukan');
 
-            $data = $pengaduan
-                ->firstWhere('status', 'diajukan');
-
-            /*
-            | Kalau tidak ada status diajukan,
-            | ambil pengaduan pertama.
-            */
-
+            // Jika tidak ada, ambil data pertama
             if (!$data) {
                 $data = $pengaduan->first();
             }
 
         } else {
 
-            /*
-            | Pengaman kalau suatu saat controller
-            | mengirim satu object saja.
-            */
-
             $data = $pengaduan;
 
             $jumlahPengaduan = $data ? 1 : 0;
         }
     }
-
 @endphp
 
 
@@ -1001,7 +1042,7 @@
 
         <!-- DATA PENGADUAN -->
 
-        <a href="{{ route('petugas.pengaduan.index') }}">
+        <a href="{{ route('petugas.pengaduan.data') }}">
 
             <span class="menu-icon">
                 ▤
@@ -1016,7 +1057,7 @@
 
         <!-- LAPORAN -->
 
-        <a href="#">
+        <a href="{{ route('petugas.pengaduan.laporan') }}">
 
             <span class="menu-icon">
                 ⌁
@@ -1137,6 +1178,7 @@
             <input
                 type="text"
                 placeholder="Cari nomor tiket / judul..."
+                id="searchInput"
             >
 
         </div>
@@ -1147,6 +1189,53 @@
     <!-- CONTENT -->
 
     <section class="content">
+
+
+        {{-- PESAN BERHASIL --}}
+
+        @if(session('success'))
+
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+
+        @endif
+
+
+        {{-- PESAN ERROR --}}
+
+        @if(session('error'))
+
+            <div class="alert alert-error">
+                {{ session('error') }}
+            </div>
+
+        @endif
+
+
+        {{-- VALIDATION ERROR --}}
+
+        @if($errors->any())
+
+            <div class="validation-errors">
+
+                <strong>Terjadi kesalahan:</strong>
+
+                <ul>
+
+                    @foreach($errors->all() as $error)
+
+                        <li>
+                            {{ $error }}
+                        </li>
+
+                    @endforeach
+
+                </ul>
+
+            </div>
+
+        @endif
 
 
         @if($data)
@@ -1174,7 +1263,7 @@
 
                         <div class="status-badge">
 
-                            Diterima
+                            {{ ucfirst($data->status ?? 'diajukan') }}
 
                         </div>
 
@@ -1286,125 +1375,181 @@
 
                 <div class="verification-card">
 
-
                     <h2 class="verification-title">
                         Verifikasi pengaduan
                     </h2>
 
 
-                    <!-- CHECKLIST -->
+                    {{-- FORM UTAMA --}}
 
-                    <div class="check-list">
+                    <form
+                        method="POST"
+                        action="{{ route('petugas.pengaduan.verifikasi', $data->id_pengaduan) }}"
+                        id="verificationForm"
+                    >
+
+                        @csrf
 
 
-                        <label class="check-item">
+                        {{-- NILAI HASIL VERIFIKASI --}}
 
-                            <input
-                                type="checkbox"
-                                name="data_pelapor"
+                        <input
+                            type="hidden"
+                            name="hasil_verifikasi"
+                            id="hasilVerifikasi"
+                            value="valid"
+                        >
+
+
+                        <!-- CHECKLIST -->
+
+                        <div class="check-list">
+
+
+                            <label class="check-item">
+
+                                <input
+                                    type="checkbox"
+                                    name="data_pelapor"
+                                    value="1"
+                                >
+
+                                <span>
+                                    Data pelapor lengkap
+                                </span>
+
+                            </label>
+
+
+                            <label class="check-item">
+
+                                <input
+                                    type="checkbox"
+                                    name="lokasi_jelas"
+                                    value="1"
+                                >
+
+                                <span>
+                                    Lokasi kejadian jelas
+                                </span>
+
+                            </label>
+
+
+                            <label class="check-item">
+
+                                <input
+                                    type="checkbox"
+                                    name="foto_sesuai"
+                                    value="1"
+                                >
+
+                                <span>
+                                    Foto sesuai dengan uraian
+                                </span>
+
+                            </label>
+
+
+                            <label class="check-item">
+
+                                <input
+                                    type="checkbox"
+                                    name="wilayah_kelurahan"
+                                    value="1"
+                                >
+
+                                <span>
+                                    Berada dalam wilayah kelurahan
+                                </span>
+
+                            </label>
+
+
+                        </div>
+
+
+                        <!-- HASIL -->
+
+                        <div class="result-title">
+                            Hasil verifikasi
+                        </div>
+
+
+                        <div class="result-options">
+
+
+                            <!-- VALID -->
+
+                            <button
+                                type="button"
+                                class="result-btn active"
+                                id="validBtn"
+                                onclick="pilihHasil('valid')"
                             >
 
-                            <span>
-                                Data pelapor lengkap
-                            </span>
+                                Valid
 
-                        </label>
+                            </button>
 
 
-                        <label class="check-item">
+                            <!-- TIDAK VALID -->
 
-                            <input
-                                type="checkbox"
-                                name="lokasi_jelas"
+                            <button
+                                type="button"
+                                class="result-btn"
+                                id="tidakValidBtn"
+                                onclick="pilihHasil('tidak_valid')"
                             >
 
-                            <span>
-                                Lokasi kejadian jelas
-                            </span>
+                                Tidak valid
 
-                        </label>
+                            </button>
 
 
-                        <label class="check-item">
+                        </div>
 
-                            <input
-                                type="checkbox"
-                                name="foto_sesuai"
+
+                        <!-- ACTION -->
+
+                        <div class="action-buttons">
+
+
+                            <!-- VERIFIKASI -->
+
+                            <button
+                                type="submit"
+                                class="btn btn-verifikasi"
+                                id="btnVerifikasi"
+                                onclick="setHasilSebelumSubmit('valid')"
                             >
 
-                            <span>
-                                Foto sesuai dengan uraian
-                            </span>
+                                ✓ Verifikasi
 
-                        </label>
+                            </button>
 
 
-                        <label class="check-item">
+                            <!-- TOLAK -->
 
-                            <input
-                                type="checkbox"
-                                name="wilayah_kelurahan"
+                            <button
+                                type="submit"
+                                class="btn btn-tolak"
+                                id="btnTolak"
+                                onclick="setHasilSebelumSubmit('tidak_valid')"
                             >
 
-                            <span>
-                                Berada dalam wilayah kelurahan
-                            </span>
+                                × Tolak
 
-                        </label>
+                            </button>
 
 
-                    </div>
+                        </div>
 
 
-                    <!-- HASIL -->
-
-                    <div class="result-title">
-                        Hasil verifikasi
-                    </div>
-
-
-                    <div class="result-options">
-
-                        <button
-                            type="button"
-                            class="result-btn active"
-                        >
-                            Valid
-                        </button>
-
-                        <button
-                            type="button"
-                            class="result-btn"
-                        >
-                            Tidak valid
-                        </button>
-
-                    </div>
-
-
-                    <!-- ACTION -->
-
-                    <div class="action-buttons">
-
-                        <button
-                            type="button"
-                            class="btn btn-verifikasi"
-                        >
-                            ✓ Verifikasi
-                        </button>
-
-
-                        <button
-                            type="button"
-                            class="btn btn-tolak"
-                        >
-                            × Tolak
-                        </button>
-
-                    </div>
-
+                    </form>
 
                 </div>
+
 
             </div>
 
@@ -1435,6 +1580,106 @@
     </section>
 
 </main>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+    /*
+    |--------------------------------------------------------------------------
+    | Pilih hasil verifikasi
+    |--------------------------------------------------------------------------
+    */
+
+    function pilihHasil(hasil) {
+
+        const input = document.getElementById('hasilVerifikasi');
+
+        const validBtn = document.getElementById('validBtn');
+
+        const tidakValidBtn = document.getElementById('tidakValidBtn');
+
+
+        if (!input || !validBtn || !tidakValidBtn) {
+            return;
+        }
+
+
+        input.value = hasil;
+
+
+        if (hasil === 'valid') {
+
+            validBtn.classList.add('active');
+
+            tidakValidBtn.classList.remove('active');
+
+        } else {
+
+            validBtn.classList.remove('active');
+
+            tidakValidBtn.classList.add('active');
+
+        }
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Pastikan tombol action mengirim hasil yang benar
+    |--------------------------------------------------------------------------
+    */
+
+    function setHasilSebelumSubmit(hasil) {
+
+        const input = document.getElementById('hasilVerifikasi');
+
+        if (input) {
+
+            input.value = hasil;
+
+        }
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Search sederhana
+    |--------------------------------------------------------------------------
+    */
+
+    const searchInput = document.getElementById('searchInput');
+
+    if (searchInput) {
+
+        searchInput.addEventListener('keydown', function(event) {
+
+            if (event.key === 'Enter') {
+
+                const keyword = this.value.trim();
+
+                if (keyword !== '') {
+
+                    window.location.href =
+                        "{{ route('petugas.pengaduan.data') }}" +
+                        "?keyword=" +
+                        encodeURIComponent(keyword);
+
+                }
+
+            }
+
+        });
+
+    }
+
+</script>
+
 
 </body>
 </html>

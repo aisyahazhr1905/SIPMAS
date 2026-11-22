@@ -1039,7 +1039,7 @@
 
             <!-- DATA PENGADUAN -->
 
-            <a href="{{ route('petugas.pengaduan.index') }}">
+            <a href="{{ route('petugas.pengaduan.data') }}">
 
                 <span class="menu-icon">
                     ▤
@@ -1051,11 +1051,15 @@
 
             </a>
 
+            <a href="{{ route('petugas.pengaduan.arsip') }}">
+                <span class="menu-icon">⌁</span>
+                <span>Arsip Pengaduan</span>
+            </a>
+
 
             <!-- LAPORAN -->
 
-            <a href="#">
-
+            <a href="{{ route('petugas.pengaduan.laporan') }}">
                 <span class="menu-icon">
                     ⌁
                 </span>
@@ -1063,7 +1067,6 @@
                 <span class="menu-label">
                     Laporan
                 </span>
-
             </a>
 
 
