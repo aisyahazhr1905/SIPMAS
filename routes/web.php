@@ -67,9 +67,19 @@ Route::prefix('warga')
 |--------------------------------------------------------------------------
 */
 
+/*
+|--------------------------------------------------------------------------
+| DASHBOARD PETUGAS
+|--------------------------------------------------------------------------
+*/
+
 Route::prefix('petugas')
     ->middleware(['auth', 'role:petugas'])
     ->group(function () {
+
+        // =====================================================
+        // DASHBOARD PETUGAS
+        // =====================================================
 
         Route::get(
             '/dashboard',
@@ -77,40 +87,24 @@ Route::prefix('petugas')
         )->name('petugas.dashboard');
 
 
-        // PENGADUAN MASUK
+        // =====================================================
+        // PENGADUAN MASUK / VERIFIKASI
+        // =====================================================
+
         Route::get(
             '/pengaduan',
             [PengaduanController::class, 'index']
         )->name('petugas.pengaduan.index');
 
 
-        // DATA PENGADUAN
-        Route::get(
-            '/data-pengaduan',
-            [PengaduanController::class, 'dataPengaduan']
-        )->name('petugas.pengaduan.data');
-
-
-        // ARSIP PENGADUAN
-        Route::get(
-            '/arsip-pengaduan',
-            [PengaduanController::class, 'arsip']
-        )->name('petugas.pengaduan.arsip');
-
-
-        // LAPORAN
-        Route::get(
-            '/laporan',
-            [PengaduanController::class, 'laporan']
-        )->name('petugas.laporan');
-
-
+        // =====================================================
         // INPUT PENGADUAN
+        // =====================================================
+
         Route::get(
             '/pengaduan/create',
             [PengaduanController::class, 'create']
         )->name('petugas.pengaduan.create');
-
 
         Route::post(
             '/pengaduan',
@@ -118,11 +112,45 @@ Route::prefix('petugas')
         )->name('petugas.pengaduan.store');
 
 
-        // VERIFIKASI
+        // =====================================================
+        // DATA PENGADUAN
+        // =====================================================
+
+        Route::get(
+            '/data-pengaduan',
+            [PengaduanController::class, 'dataPengaduan']
+        )->name('petugas.pengaduan.data');
+
+
+        // =====================================================
+        // ARSIP PENGADUAN
+        // =====================================================
+
+        Route::get(
+            '/arsip-pengaduan',
+            [PengaduanController::class, 'arsip']
+        )->name('petugas.pengaduan.arsip');
+
+
+        // =====================================================
+        // LAPORAN PENGADUAN
+        // =====================================================
+
+        Route::get(
+            '/laporan-pengaduan',
+            [PengaduanController::class, 'laporan']
+        )->name('petugas.pengaduan.laporan');
+
+
+        // =====================================================
+        // VERIFIKASI PENGADUAN
+        // =====================================================
+
         Route::post(
             '/pengaduan/{id}/verifikasi',
             [PengaduanController::class, 'verifikasi']
         )->name('petugas.pengaduan.verifikasi');
+
     });
 
 
