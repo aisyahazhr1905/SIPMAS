@@ -1,175 +1,273 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@extends('layouts.admin')
 
-    <title>Dashboard Admin - SIPMAS</title>
+@section('title', 'Dashboard Admin - SIPMAS')
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
+@section('breadcrumb', 'Dashboard')
 
-<body>
+@section('content')
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
+<div class="page-heading">
 
-        <div class="logo">
-            SIPMAS
-        </div>
+    <h1>Dashboard Admin</h1>
 
-        <div class="subtitle">
-            Sistem Informasi Pengaduan<br>
-            Masyarakat
-        </div>
+    <p>
+        Kelola dan pantau sistem SIPMAS melalui menu administrasi yang tersedia.
+    </p>
 
-        <div class="menu">
-
-            <!-- MENU UTAMA -->
-            <div class="menu-title">
-                Menu Utama
-            </div>
-
-            <a href="{{ route('admin.dashboard') }}" class="active">
-                Dashboard
-            </a>
+</div>
 
 
-            <!-- MANAJEMEN SISTEM -->
-            <div class="menu-title">
-                Manajemen Sistem
-            </div>
+{{-- =====================================================
+     SELAMAT DATANG
+===================================================== --}}
 
-            <a href="{{ route('admin.pengguna.index') }}">
-                Kelola Pengguna
-            </a>
+<div class="admin-card welcome-card">
 
-            <a href="{{ route('admin.kategori.index') }}">
-                Kategori Pengaduan
-            </a>
+    <div class="welcome-icon">
+        👋
+    </div>
 
-            <a href="{{ route('admin.rt_rw.index') }}">
-                Data RT/RW
-            </a>
+    <div>
 
-            <a href="{{ route('admin.seksi.index') }}">
-                Data Seksi
-            </a>
+        <h2>
+            Selamat Datang, Admin
+        </h2>
 
+        <p>
+            Kelola data pengguna, kategori pengaduan, RT/RW,
+            seksi penanggung jawab, serta backup data SIPMAS.
+        </p>
 
-            <!-- PEMELIHARAAN -->
-            <div class="menu-title">
-                Pemeliharaan
-            </div>
+    </div>
 
-            <a href="{{ route('admin.backup.index') }}">
-                Backup & Restore
-            </a>
-
-        </div>
+</div>
 
 
-        <!-- LOGOUT -->
-        <div class="logout">
+{{-- =====================================================
+     RINGKASAN DATA
+===================================================== --}}
 
-            <form action="{{ route('logout') }}" method="POST">
+<div class="summary-heading">
 
-                @csrf
+    <h2>
+        Ringkasan Data
+    </h2>
 
-                <button type="submit">
-                    Keluar
-                </button>
+    <p>
+        Informasi singkat mengenai data yang terdapat dalam sistem.
+    </p>
 
-            </form>
-
-        </div>
-
-    </aside>
-
-
-    <!-- MAIN CONTENT -->
-    <main class="main">
-
-        <!-- TOPBAR -->
-        <div class="topbar">
-
-            <h2>
-                Dashboard Admin
-            </h2>
-
-            <div class="user">
-                {{ Auth::user()->nama_lengkap }}
-            </div>
-
-        </div>
+</div>
 
 
-        <!-- CONTENT -->
-        <div class="content">
+<div class="dashboard-cards">
 
-            <!-- WELCOME -->
-            <div class="welcome">
 
-                <h1>
-                    Selamat Datang, Admin
-                </h1>
+    {{-- TOTAL PENGGUNA --}}
 
-                <p>
-                    Kelola sistem SIPMAS melalui menu yang tersedia.
+    <div class="stat-card">
+
+        <div class="stat-card-top">
+
+            <div>
+
+                <h3>
+                    Total Pengguna
+                </h3>
+
+                <div class="stat-number">
+                    0
+                </div>
+
+                <p class="stat-card-description">
+                    Pengguna terdaftar
                 </p>
 
             </div>
 
-
-            <!-- DASHBOARD CARDS -->
-            <div class="cards">
-
-                <!-- TOTAL PENGGUNA -->
-                <div class="dashboard-card">
-
-                    <h3>
-                        Total Pengguna
-                    </h3>
-
-                    <div class="number">
-                        0
-                    </div>
-
-                </div>
-
-
-                <!-- TOTAL PENGADUAN -->
-                <div class="dashboard-card">
-
-                    <h3>
-                        Total Pengaduan
-                    </h3>
-
-                    <div class="number">
-                        0
-                    </div>
-
-                </div>
-
-
-                <!-- PENGADUAN SELESAI -->
-                <div class="dashboard-card">
-
-                    <h3>
-                        Pengaduan Selesai
-                    </h3>
-
-                    <div class="number">
-                        0
-                    </div>
-
-                </div>
-
+            <div class="stat-icon">
+                👤
             </div>
 
         </div>
 
-    </main>
+    </div>
 
-</body>
-</html>
+
+    {{-- TOTAL PENGADUAN --}}
+
+    <div class="stat-card">
+
+        <div class="stat-card-top">
+
+            <div>
+
+                <h3>
+                    Total Pengaduan
+                </h3>
+
+                <div class="stat-number">
+                    0
+                </div>
+
+                <p class="stat-card-description">
+                    Seluruh pengaduan
+                </p>
+
+            </div>
+
+            <div class="stat-icon">
+                📋
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {{-- PENGADUAN SELESAI --}}
+
+    <div class="stat-card">
+
+        <div class="stat-card-top">
+
+            <div>
+
+                <h3>
+                    Pengaduan Selesai
+                </h3>
+
+                <div class="stat-number">
+                    0
+                </div>
+
+                <p class="stat-card-description">
+                    Pengaduan yang telah selesai
+                </p>
+
+            </div>
+
+            <div class="stat-icon stat-icon-success">
+                ✓
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{{-- =====================================================
+     MANAJEMEN SISTEM
+===================================================== --}}
+
+<div class="admin-card" style="margin-top:25px;">
+
+    <h2 class="management-heading">
+        Manajemen Sistem
+    </h2>
+
+    <p class="management-description">
+        Gunakan menu berikut untuk mengelola data SIPMAS.
+    </p>
+
+
+    <div class="management-grid">
+
+
+        {{-- PENGGUNA --}}
+
+        <a
+            href="{{ route('admin.pengguna.index') }}"
+            class="management-link"
+        >
+
+            <strong>
+                Pengguna & Hak Akses
+            </strong>
+
+            <span>
+                Kelola akun dan hak akses pengguna.
+            </span>
+
+        </a>
+
+
+        {{-- KATEGORI --}}
+
+        <a
+            href="{{ route('admin.kategori.index') }}"
+            class="management-link"
+        >
+
+            <strong>
+                Kategori Pengaduan
+            </strong>
+
+            <span>
+                Kelola kategori pengaduan masyarakat.
+            </span>
+
+        </a>
+
+
+        {{-- RT/RW --}}
+
+        <a
+            href="{{ route('admin.rt_rw.index') }}"
+            class="management-link"
+        >
+
+            <strong>
+                Data RT/RW
+            </strong>
+
+            <span>
+                Kelola data RT dan RW kelurahan.
+            </span>
+
+        </a>
+
+
+        {{-- SEKSI --}}
+
+        <a
+            href="{{ route('admin.seksi.index') }}"
+            class="management-link"
+        >
+
+            <strong>
+                Seksi Penanggung Jawab
+            </strong>
+
+            <span>
+                Kelola seksi penanggung jawab pengaduan.
+            </span>
+
+        </a>
+
+
+        {{-- BACKUP --}}
+
+        <a
+            href="{{ route('admin.backup.index') }}"
+            class="management-link"
+        >
+
+            <strong>
+                Backup & Restore
+            </strong>
+
+            <span>
+                Kelola pencadangan dan pemulihan data.
+            </span>
+
+        </a>
+
+
+    </div>
+
+</div>
+
+@endsection

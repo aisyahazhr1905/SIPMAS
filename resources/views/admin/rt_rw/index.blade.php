@@ -1,149 +1,105 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data RT/RW - SIPMAS</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f6fa;
-            margin: 0;
-            padding: 30px;
-        }
+@extends('layouts.admin')
 
-        .container {
-            max-width: 1000px;
-            margin: auto;
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
+@section('title', 'Data RT/RW - SIPMAS')
+@section('breadcrumb', 'Data RT/RW')
 
-        h2 {
-            margin-top: 0;
-            color: #333;
-        }
+@section('content')
 
-        .btn {
-            display: inline-block;
-            padding: 10px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-        }
+<div class="page-heading">
+    <h1>Data RT/RW</h1>
+    <p>Kelola data RT dan RW yang digunakan dalam sistem SIPMAS.</p>
+</div>
 
-        .btn-tambah {
-            background: #198754;
-            margin-bottom: 20px;
-        }
+<div class="admin-card">
 
-        .btn-edit {
-            background: #0d6efd;
-        }
-
-        .btn-hapus {
-            background: #dc3545;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background: #f1f1f1;
-        }
-
-        .alert {
-            background: #d1e7dd;
-            color: #0f5132;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-        }
-
-        form {
-            display: inline;
-        }
-    </style>
-</head>
-
-<body>
-
-<div class="container">
-
-    <h2>Data RT/RW</h2>
-
-    @if(session('success'))
-        <div class="alert">
-            {{ session('success') }}
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <div>
+            <h2 style="margin:0; color:#183b56; font-size:18px;">
+                Data RT/RW
+            </h2>
+            <p style="margin:5px 0 0; color:#6b7c93; font-size:13px;">
+                Daftar RT dan RW beserta nama ketua.
+            </p>
         </div>
-    @endif
 
-    <a href="{{ route('admin.rt_rw.create') }}" class="btn btn-tambah">
-        + Tambah Data RT/RW
-    </a>
+        <a href="{{ route('admin.rt_rw.create') }}"
+           class="admin-btn admin-btn-success">
+            + Tambah Data RT/RW
+        </a>
+    </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>RT</th>
-                <th>RW</th>
-                <th>Nama Ketua</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
+    <div class="table-wrapper">
+        <table class="admin-table">
 
-        <tbody>
-            @forelse($rtRw as $data)
+            <thead>
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $data->no_rt }}</td>
-                    <td>{{ $data->no_rw }}</td>
-                    <td>{{ $data->nama_ketua }}</td>
-                    <td>
-                        <a href="{{ route('admin.rt_rw.edit', $data->id_rt_rw) }}"
-                           class="btn btn-edit">
-                            Edit
-                        </a>
-
-                        <form action="{{ route('admin.rt_rw.destroy', $data->id_rt_rw) }}"
-                              method="POST"
-                              onsubmit="return confirm('Yakin ingin menghapus data ini?')">
-
-                            @csrf
-                            @method('DELETE')
-
-                            <button type="submit" class="btn btn-hapus">
-                                Hapus
-                            </button>
-                        </form>
-                    </td>
+                    <th style="width:60px;">No</th>
+                    <th>RT</th>
+                    <th>RW</th>
+                    <th>Nama Ketua</th>
+                    <th style="width:180px;">Aksi</th>
                 </tr>
-            @empty
-                <tr>
-                    <td colspan="5" style="text-align:center;">
-                        Belum ada data RT/RW.
-                    </td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody>
+
+                @forelse($rtRw as $item)
+
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+
+                        <td>{{ $item->no_rt }}</td>
+
+                        <td>{{ $item->no_rw }}</td>
+
+                        <td>
+                            <strong style="color:#183b56;">
+                                {{ $item->nama_ketua }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            <div class="action-group">
+
+                                <a href="{{ route('admin.rt_rw.edit', $item->id_rt_rw) }}"
+                                   class="admin-btn admin-btn-warning">
+                                    Edit
+                                </a>
+
+                                <form action="{{ route('admin.rt_rw.destroy', $item->id_rt_rw) }}"
+                                      method="POST"
+                                      onsubmit="return confirm('Yakin ingin menghapus data RT/RW ini?')"
+                                      style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit"
+                                            class="admin-btn admin-btn-danger">
+                                        Hapus
+                                    </button>
+                                </form>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                @empty
+
+                    <tr>
+                        <td colspan="5"
+                            style="text-align:center; padding:35px; color:#8b96a5;">
+                            Belum ada data RT/RW.
+                        </td>
+                    </tr>
+
+                @endforelse
+
+            </tbody>
+
+        </table>
+    </div>
 
 </div>
 
-</body>
-</html>
+@endsection

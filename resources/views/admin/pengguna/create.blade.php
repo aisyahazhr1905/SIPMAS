@@ -1,163 +1,265 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts.admin')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@section('title', 'Tambah Pengguna - SIPMAS')
+@section('breadcrumb', 'Tambah Pengguna')
 
-    <title>Tambah Pengguna - SIPMAS</title>
+@section('content')
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f1f5f9;
-            padding: 40px;
-        }
+<div class="page-heading">
+    <h1>Tambah Pengguna</h1>
+    <p>Tambahkan pengguna baru dan tentukan hak aksesnya dalam sistem SIPMAS.</p>
+</div>
 
-        .container {
-            max-width: 700px;
-            margin: auto;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-        }
+@if($errors->any())
+    <div class="alert alert-error">
+        <strong>Terjadi kesalahan:</strong>
 
-        h1 {
-            color: #1e293b;
-            margin-bottom: 25px;
-        }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 7px;
-            font-weight: bold;
-        }
-
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            box-sizing: border-box;
-        }
-
-        textarea {
-            resize: vertical;
-        }
-
-        .btn {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-        }
-
-        .back {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #2563eb;
-            text-decoration: none;
-        }
-
-        .error {
-            background: #fee2e2;
-            color: #991b1b;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="container">
-
-        <a href="{{ route('admin.pengguna.index') }}" class="back">
-            ← Kembali
-        </a>
-
-        <h1>Tambah Pengguna</h1>
-
-        @if($errors->any())
-        <div class="error">
+        <ul style="margin: 8px 0 0; padding-left: 20px;">
             @foreach($errors->all() as $error)
-            <div>{{ $error }}</div>
+                <li>{{ $error }}</li>
             @endforeach
+        </ul>
+    </div>
+@endif
+
+<div class="admin-card">
+
+    <div style="
+        margin-bottom: 22px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e5ebf0;
+    ">
+        <h2 style="
+            margin: 0 0 6px;
+            color: #183b56;
+            font-size: 18px;
+        ">
+            Form Data Pengguna
+        </h2>
+
+        <p style="
+            margin: 0;
+            color: #6b7c93;
+            font-size: 13px;
+        ">
+            Lengkapi data pengguna yang akan ditambahkan ke dalam sistem.
+        </p>
+    </div>
+
+    <form action="{{ route('admin.pengguna.store') }}" method="POST">
+        @csrf
+
+        {{-- NAMA LENGKAP --}}
+        <div class="form-group">
+            <label for="nama_lengkap">
+                Nama Lengkap
+            </label>
+
+            <input
+                type="text"
+                id="nama_lengkap"
+                name="nama_lengkap"
+                class="form-control"
+                value="{{ old('nama_lengkap') }}"
+                placeholder="Masukkan nama lengkap"
+                maxlength="255"
+                required
+            >
         </div>
-        @endif
 
-        <form action="{{ route('admin.pengguna.store') }}" method="POST">
+        {{-- NIK --}}
+        <div class="form-group">
+            <label for="nik">
+                NIK
+            </label>
 
-            @csrf
+            <input
+                type="text"
+                id="nik"
+                name="nik"
+                class="form-control"
+                value="{{ old('nik') }}"
+                placeholder="Masukkan NIK"
+                maxlength="30"
+                required
+            >
+        </div>
 
-            <div class="form-group">
-                <label>Nama Lengkap</label>
-                <input type="text" name="nama_lengkap" required>
-            </div>
+        {{-- EMAIL --}}
+        <div class="form-group">
+            <label for="email">
+                Email
+            </label>
 
-            <div class="form-group">
-                <label>NIK</label>
-                <input type="text" name="nik" required>
-            </div>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control"
+                value="{{ old('email') }}"
+                placeholder="contoh@email.com"
+                maxlength="255"
+                required
+            >
+        </div>
 
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" name="email" required>
-            </div>
+        {{-- NOMOR HP --}}
+        <div class="form-group">
+            <label for="no_hp">
+                Nomor HP
+            </label>
 
-            <div class="form-group">
-                <label>No. HP</label>
-                <input type="text" name="no_hp" required>
-            </div>
+            <input
+                type="text"
+                id="no_hp"
+                name="no_hp"
+                class="form-control"
+                value="{{ old('no_hp') }}"
+                placeholder="Masukkan nomor HP"
+                maxlength="20"
+                required
+            >
+        </div>
 
-            <div class="form-group">
-                <label>Alamat</label>
-                <textarea name="alamat" rows="3" required></textarea>
-            </div>
+        {{-- ALAMAT --}}
+        <div class="form-group">
+            <label for="alamat">
+                Alamat
+            </label>
 
-            <div class="form-group">
-                <label>Role</label>
+            <textarea
+                id="alamat"
+                name="alamat"
+                class="form-control"
+                placeholder="Masukkan alamat lengkap"
+                required
+            >{{ old('alamat') }}</textarea>
+        </div>
 
-                <select name="role" required>
-                    <option value="">-- Pilih Role --</option>
-                    <option value="admin">Admin</option>
-                    <option value="petugas">Petugas</option>
-                    <option value="lurah">Lurah</option>
-                    <option value="warga">Warga</option>
-                </select>
-            </div>
+        {{-- ROLE --}}
+        <div class="form-group">
+            <label for="role">
+                Role / Hak Akses
+            </label>
 
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" name="password" required>
-            </div>
+            <select
+                id="role"
+                name="role"
+                class="form-control"
+                required
+            >
+                <option value="">
+                    -- Pilih Role --
+                </option>
 
-            <div class="form-group">
-                <label>Konfirmasi Password</label>
-                <input type="password" name="password_confirmation" required>
-            </div>
+                <option
+                    value="admin"
+                    {{ old('role') === 'admin' ? 'selected' : '' }}
+                >
+                    Admin
+                </option>
 
-            <button type="submit" class="btn btn-primary">
+                <option
+                    value="petugas"
+                    {{ old('role') === 'petugas' ? 'selected' : '' }}
+                >
+                    Petugas
+                </option>
+
+                <option
+                    value="lurah"
+                    {{ old('role') === 'lurah' ? 'selected' : '' }}
+                >
+                    Lurah
+                </option>
+
+                <option
+                    value="warga"
+                    {{ old('role') === 'warga' ? 'selected' : '' }}
+                >
+                    Warga
+                </option>
+            </select>
+
+            <small style="
+                display: block;
+                margin-top: 6px;
+                color: #718096;
+                font-size: 12px;
+            ">
+                Pilih hak akses sesuai dengan peran pengguna.
+            </small>
+        </div>
+
+        {{-- PASSWORD --}}
+        <div class="form-group">
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-control"
+                placeholder="Minimal 6 karakter"
+                required
+            >
+
+            <small style="
+                display: block;
+                margin-top: 6px;
+                color: #718096;
+                font-size: 12px;
+            ">
+                Password minimal 6 karakter.
+            </small>
+        </div>
+
+        {{-- KONFIRMASI PASSWORD --}}
+        <div class="form-group">
+            <label for="password_confirmation">
+                Konfirmasi Password
+            </label>
+
+            <input
+                type="password"
+                id="password_confirmation"
+                name="password_confirmation"
+                class="form-control"
+                placeholder="Masukkan kembali password"
+                required
+            >
+        </div>
+
+        {{-- TOMBOL --}}
+        <div style="
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding-top: 15px;
+            margin-top: 10px;
+            border-top: 1px solid #e5ebf0;
+        ">
+
+            <a
+                href="{{ route('admin.pengguna.index') }}"
+                class="admin-btn admin-btn-secondary"
+            >
+                Batal
+            </a>
+
+            <button
+                type="submit"
+                class="admin-btn admin-btn-primary"
+            >
                 Simpan Pengguna
             </button>
 
-        </form>
+        </div>
 
-    </div>
+    </form>
 
-</body>
+</div>
 
-</html>
+@endsection

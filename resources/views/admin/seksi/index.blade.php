@@ -1,154 +1,110 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Seksi - SIPMAS</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f6fa;
-            margin: 0;
-            padding: 30px;
-        }
+@extends('layouts.admin')
 
-        .container {
-            max-width: 1000px;
-            margin: auto;
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
+@section('title', 'Seksi Penanggung Jawab - SIPMAS')
+@section('breadcrumb', 'Seksi Penanggung Jawab')
 
-        h2 {
-            margin-top: 0;
-        }
+@section('content')
 
-        .btn {
-            display: inline-block;
-            padding: 10px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+<div class="page-heading">
+    <h1>Seksi Penanggung Jawab</h1>
+    <p>Kelola seksi yang bertanggung jawab dalam penanganan pengaduan.</p>
+</div>
 
-        .btn-tambah {
-            background: #198754;
-            margin-bottom: 20px;
-        }
+<div class="admin-card">
 
-        .btn-edit {
-            background: #0d6efd;
-        }
-
-        .btn-hapus {
-            background: #dc3545;
-        }
-
-        .btn-kembali {
-            background: #6c757d;
-            margin-top: 20px;
-        }
-
-        .alert {
-            background: #d1e7dd;
-            color: #0f5132;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background: #f1f1f1;
-        }
-
-        form {
-            display: inline;
-        }
-    </style>
-</head>
-
-<body>
-
-<div class="container">
-
-    <h2>Data Seksi Penanggung Jawab</h2>
-
-    @if(session('success'))
-        <div class="alert">
-            {{ session('success') }}
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <div>
+            <h2 style="margin:0; color:#183b56; font-size:18px;">
+                Data Seksi
+            </h2>
+            <p style="margin:5px 0 0; color:#6b7c93; font-size:13px;">
+                Daftar seksi dan penanggung jawab.
+            </p>
         </div>
-    @endif
 
-    <a href="{{ route('admin.seksi.create') }}" class="btn btn-tambah">
-        + Tambah Seksi
-    </a>
+        <a href="{{ route('admin.seksi.create') }}"
+           class="admin-btn admin-btn-success">
+            + Tambah Seksi
+        </a>
+    </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama Seksi</th>
-                <th>Penanggung Jawab</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
+    <div class="table-wrapper">
+        <table class="admin-table">
 
-        <tbody>
-            @forelse($seksi as $data)
+            <thead>
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $data->nama_seksi }}</td>
-                    <td>{{ $data->penanggung_jawab }}</td>
-                    <td>
-                        <a href="{{ route('admin.seksi.edit', $data->id_seksi) }}"
-                           class="btn btn-edit">
-                            Edit
-                        </a>
-
-                        <form action="{{ route('admin.seksi.destroy', $data->id_seksi) }}"
-                              method="POST"
-                              onsubmit="return confirm('Yakin ingin menghapus data seksi ini?')">
-
-                            @csrf
-                            @method('DELETE')
-
-                            <button type="submit" class="btn btn-hapus">
-                                Hapus
-                            </button>
-                        </form>
-                    </td>
+                    <th style="width:60px;">No</th>
+                    <th>Nama Seksi</th>
+                    <th>Penanggung Jawab</th>
+                    <th style="width:180px;">Aksi</th>
                 </tr>
-            @empty
-                <tr>
-                    <td colspan="4" style="text-align:center;">
-                        Belum ada data seksi.
-                    </td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+            </thead>
 
-    <a href="{{ route('admin.dashboard') }}" class="btn btn-kembali">
-        Kembali ke Dashboard
-    </a>
+            <tbody>
+
+                @forelse($seksi as $item)
+
+                    <tr>
+
+                        <td>{{ $loop->iteration }}</td>
+
+                        <td>
+                            <strong style="color:#183b56;">
+                                {{ $item->nama_seksi }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            {{ $item->penanggung_jawab }}
+                        </td>
+
+                        <td>
+
+                            <div class="action-group">
+
+                                <a href="{{ route('admin.seksi.edit', $item->id_seksi) }}"
+                                   class="admin-btn admin-btn-warning">
+                                    Edit
+                                </a>
+
+                                <form action="{{ route('admin.seksi.destroy', $item->id_seksi) }}"
+                                      method="POST"
+                                      onsubmit="return confirm('Yakin ingin menghapus seksi ini?')"
+                                      style="display:inline;">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit"
+                                            class="admin-btn admin-btn-danger">
+                                        Hapus
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                @empty
+
+                    <tr>
+                        <td colspan="4"
+                            style="text-align:center; padding:35px; color:#8b96a5;">
+                            Belum ada data seksi.
+                        </td>
+                    </tr>
+
+                @endforelse
+
+            </tbody>
+
+        </table>
+    </div>
 
 </div>
 
-</body>
-</html>
+@endsection

@@ -1,123 +1,115 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Seksi - SIPMAS</title>
+@extends('layouts.admin')
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f6fa;
+@section('title', 'Tambah Seksi - SIPMAS')
+@section('breadcrumb', 'Tambah Seksi')
+
+@section('content')
+
+<div class="page-heading">
+    <h1>Tambah Seksi</h1>
+    <p>Tambahkan seksi penanggung jawab untuk menangani pengaduan masyarakat.</p>
+</div>
+
+@if($errors->any())
+    <div class="alert alert-error">
+        <strong>Terjadi kesalahan:</strong>
+
+        <ul style="margin: 8px 0 0; padding-left: 20px;">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+<div class="admin-card">
+
+    <div style="
+        margin-bottom: 22px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e5ebf0;
+    ">
+        <h2 style="
+            margin: 0 0 6px;
+            color: #183b56;
+            font-size: 18px;
+        ">
+            Form Data Seksi
+        </h2>
+
+        <p style="
             margin: 0;
-            padding: 30px;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-
-        label {
-            display: block;
-            margin-top: 15px;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 16px;
-            margin-top: 20px;
-            border: none;
-            border-radius: 6px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .btn-simpan {
-            background: #198754;
-            color: white;
-        }
-
-        .btn-kembali {
-            background: #6c757d;
-            color: white;
-        }
-
-        .error {
-            background: #f8d7da;
-            color: #842029;
-            padding: 10px;
-            border-radius: 6px;
-        }
-    </style>
-</head>
-
-<body>
-
-<div class="container">
-
-    <h2>Tambah Data Seksi</h2>
-
-    @if ($errors->any())
-        <div class="error">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+            color: #6b7c93;
+            font-size: 13px;
+        ">
+            Lengkapi data seksi yang akan ditambahkan.
+        </p>
+    </div>
 
     <form action="{{ route('admin.seksi.store') }}" method="POST">
         @csrf
 
-        <label for="nama_seksi">Nama Seksi</label>
+        <div class="form-group">
+            <label for="nama_seksi">
+                Nama Seksi
+            </label>
 
-        <input
-            type="text"
-            id="nama_seksi"
-            name="nama_seksi"
-            value="{{ old('nama_seksi') }}"
-            placeholder="Contoh: Seksi Pelayanan"
-            required
-        >
+            <input
+                type="text"
+                id="nama_seksi"
+                name="nama_seksi"
+                class="form-control"
+                value="{{ old('nama_seksi') }}"
+                placeholder="Contoh: Seksi Pelayanan"
+                maxlength="100"
+                required
+            >
+        </div>
 
-        <label for="penanggung_jawab">Penanggung Jawab</label>
+        <div class="form-group">
+            <label for="penanggung_jawab">
+                Penanggung Jawab
+            </label>
 
-        <input
-            type="text"
-            id="penanggung_jawab"
-            name="penanggung_jawab"
-            value="{{ old('penanggung_jawab') }}"
-            placeholder="Nama penanggung jawab"
-            required
-        >
+            <input
+                type="text"
+                id="penanggung_jawab"
+                name="penanggung_jawab"
+                class="form-control"
+                value="{{ old('penanggung_jawab') }}"
+                placeholder="Masukkan nama penanggung jawab"
+                maxlength="100"
+                required
+            >
+        </div>
 
-        <button type="submit" class="btn btn-simpan">
-            Simpan
-        </button>
+        <div style="
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding-top: 15px;
+            margin-top: 10px;
+            border-top: 1px solid #e5ebf0;
+        ">
 
-        <a href="{{ route('admin.seksi.index') }}" class="btn btn-kembali">
-            Kembali
-        </a>
+            <a
+                href="{{ route('admin.seksi.index') }}"
+                class="admin-btn admin-btn-secondary"
+            >
+                Batal
+            </a>
+
+            <button
+                type="submit"
+                class="admin-btn admin-btn-primary"
+            >
+                Simpan Seksi
+            </button>
+
+        </div>
 
     </form>
 
 </div>
 
-</body>
-</html>
+@endsection

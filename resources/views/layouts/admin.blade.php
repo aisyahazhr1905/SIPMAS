@@ -1,582 +1,291 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>@yield('title', 'Admin SIPMAS')</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+    <title>
+        @yield('title', 'Admin SIPMAS')
+    </title>
 
-        body {
-            background: #f1f5f9;
-            min-height: 100vh;
-        }
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        /* =========================
-           SIDEBAR
-        ========================= */
-
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 250px;
-            height: 100vh;
-            background: #0f172a;
-            color: white;
-            padding: 25px 18px;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #60a5fa;
-            padding: 0 15px;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            font-size: 12px;
-            line-height: 1.4;
-            color: #94a3b8;
-            padding: 0 15px;
-            margin-bottom: 35px;
-        }
-
-        .menu-title {
-            font-size: 11px;
-            color: #64748b;
-            text-transform: uppercase;
-            margin: 20px 15px 10px;
-        }
-
-        .menu a {
-            display: block;
-            padding: 13px 15px;
-            margin-bottom: 5px;
-            color: #cbd5e1;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: 0.2s;
-        }
-
-        .menu a:hover {
-            background: #1e3a8a;
-            color: white;
-        }
-
-        .menu a.active {
-            background: #2563eb;
-            color: white;
-        }
-
-        /* =========================
-           LOGOUT
-        ========================= */
-
-        .logout {
-            position: absolute;
-            bottom: 25px;
-            left: 18px;
-            right: 18px;
-        }
-
-        .logout button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            background: #dc2626;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .logout button:hover {
-            background: #b91c1c;
-        }
-
-        /* =========================
-           MAIN
-        ========================= */
-
-        .main {
-            margin-left: 250px;
-            min-height: 100vh;
-        }
-
-        /* =========================
-           TOPBAR
-        ========================= */
-
-        .topbar {
-            background: white;
-            padding: 20px 35px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .topbar h2 {
-            color: #1e293b;
-            font-size: 26px;
-        }
-
-        .user {
-            color: #475569;
-            font-size: 14px;
-        }
-
-        /* =========================
-           CONTENT
-        ========================= */
-
-        .content {
-            padding: 35px;
-        }
-
-        .page-header {
-            margin-bottom: 25px;
-        }
-
-        .page-header h1 {
-            color: #1e293b;
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
-
-        .page-header p {
-            color: #64748b;
-            font-size: 14px;
-        }
-
-        /* =========================
-           CARD
-        ========================= */
-
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.04);
-        }
-
-        /* =========================
-           BUTTON
-        ========================= */
-
-        .btn {
-            display: inline-block;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 7px;
-            text-decoration: none;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #1d4ed8;
-        }
-
-        .btn-success {
-            background: #16a34a;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #15803d;
-        }
-
-        .btn-danger {
-            background: #dc2626;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #b91c1c;
-        }
-
-        .btn-warning {
-            background: #f59e0b;
-            color: white;
-        }
-
-        .btn-secondary {
-            background: #64748b;
-            color: white;
-        }
-
-        /* =========================
-           ALERT
-        ========================= */
-
-        .alert {
-            padding: 13px 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 13px;
-        }
-
-        .alert-success {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .alert-error {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        /* =========================
-           TABLE
-        ========================= */
-
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .table th {
-            background: #f8fafc;
-            color: #475569;
-            text-align: left;
-            padding: 13px 15px;
-            border-bottom: 1px solid #e2e8f0;
-            font-size: 13px;
-        }
-
-        .table td {
-            padding: 13px 15px;
-            border-bottom: 1px solid #e2e8f0;
-            color: #475569;
-            font-size: 13px;
-        }
-
-        .table tr:hover {
-            background: #f8fafc;
-        }
-
-        /* =========================
-           BADGE
-        ========================= */
-
-        .badge {
-            display: inline-block;
-            padding: 5px 9px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-        }
-
-        .badge-success {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .badge-danger {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .badge-info {
-            background: #dbeafe;
-            color: #1d4ed8;
-        }
-
-        /* =========================
-           FORM
-        ========================= */
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 7px;
-            color: #334155;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 11px 13px;
-            border: 1px solid #cbd5e1;
-            border-radius: 7px;
-            outline: none;
-            font-size: 13px;
-            background: white;
-        }
-
-        .form-control:focus {
-            border-color: #2563eb;
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        select.form-control {
-            cursor: pointer;
-        }
-
-        /* =========================
-           ACTION
-        ========================= */
-
-        .actions {
-            display: flex;
-            gap: 7px;
-            flex-wrap: wrap;
-        }
-
-        /* =========================
-           DASHBOARD
-        ========================= */
-
-        .welcome {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-        }
-
-        .welcome h1 {
-            color: #1e293b;
-            margin-bottom: 8px;
-        }
-
-        .welcome p {
-            color: #64748b;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .dashboard-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.04);
-        }
-
-        .dashboard-card h3 {
-            color: #64748b;
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-
-        .dashboard-card .number {
-            font-size: 30px;
-            font-weight: bold;
-            color: #2563eb;
-        }
-
-        /* =========================
-           RESPONSIVE
-        ========================= */
-
-        @media (max-width: 900px) {
-
-            .sidebar {
-                width: 220px;
-            }
-
-            .main {
-                margin-left: 220px;
-            }
-
-            .cards {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 700px) {
-
-            .sidebar {
-                position: relative;
-                width: 100%;
-                height: auto;
-                min-height: auto;
-            }
-
-            .logout {
-                position: static;
-                margin-top: 25px;
-            }
-
-            .main {
-                margin-left: 0;
-            }
-
-            .topbar {
-                padding: 18px;
-            }
-
-            .content {
-                padding: 20px;
-            }
-        }
-    </style>
 </head>
+
 
 <body>
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
+<div class="admin-wrapper">
 
-        <div class="logo">
-            SIPMAS
-        </div>
 
-        <div class="subtitle">
-            Sistem Informasi Pengaduan Masyarakat
-        </div>
+    {{-- =====================================================
+         SIDEBAR
+         ===================================================== --}}
 
-        <div class="menu">
+    <aside class="admin-sidebar">
 
-            <div class="menu-title">
-                Menu Utama
+
+        {{-- LOGO --}}
+
+        <div class="sidebar-brand">
+
+            <div class="sidebar-logo">
+                SIPMAS
             </div>
 
-            <a
-                href="{{ route('admin.dashboard') }}"
-                class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
-            >
+            <div class="sidebar-subtitle">
+                Sistem Informasi Pengaduan<br>
+                Masyarakat
+            </div>
+
+        </div>
+
+
+        {{-- MENU --}}
+
+        <nav class="sidebar-menu">
+
+
+            <div class="sidebar-section">
+                MENU UTAMA
+            </div>
+
+
+            <a href="{{ route('admin.dashboard') }}"
+               class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+
                 Dashboard
+
             </a>
 
 
-            <div class="menu-title">
-                Manajemen Sistem
+            <div class="sidebar-section">
+                MANAJEMEN SISTEM
             </div>
 
-            <a
-                href="{{ route('admin.pengguna.index') }}"
-                class="{{ request()->routeIs('admin.pengguna.*') ? 'active' : '' }}"
-            >
-                Kelola Pengguna
+
+            <a href="{{ route('admin.pengguna.index') }}"
+               class="{{ request()->routeIs('admin.pengguna.*') ? 'active' : '' }}">
+
+                Pengguna & Hak Akses
+
             </a>
 
-            <a
-                href="{{ route('admin.kategori.index') }}"
-                class="{{ request()->routeIs('admin.kategori.*') ? 'active' : '' }}"
-            >
+
+            <a href="{{ route('admin.kategori.index') }}"
+               class="{{ request()->routeIs('admin.kategori.*') ? 'active' : '' }}">
+
                 Kategori Pengaduan
+
             </a>
 
-            <a
-                href="{{ route('admin.rt_rw.index') }}"
-                class="{{ request()->routeIs('admin.rt_rw.*') ? 'active' : '' }}"
-            >
+
+            <a href="{{ route('admin.rt_rw.index') }}"
+               class="{{ request()->routeIs('admin.rt_rw.*') ? 'active' : '' }}">
+
                 Data RT/RW
-            </a>
 
-            <a
-                href="{{ route('admin.seksi.index') }}"
-                class="{{ request()->routeIs('admin.seksi.*') ? 'active' : '' }}"
-            >
-                Data Seksi
             </a>
 
 
-            <div class="menu-title">
-                Pemeliharaan
+            <a href="{{ route('admin.seksi.index') }}"
+               class="{{ request()->routeIs('admin.seksi.*') ? 'active' : '' }}">
+
+                Seksi Penanggung Jawab
+
+            </a>
+
+
+            <div class="sidebar-section">
+                PEMELIHARAAN
             </div>
 
-            <a
-                href="{{ route('admin.backup.index') }}"
-                class="{{ request()->routeIs('admin.backup.*') ? 'active' : '' }}"
-            >
+
+            <a href="{{ route('admin.backup.index') }}"
+               class="{{ request()->routeIs('admin.backup.*') ? 'active' : '' }}">
+
                 Backup & Restore
+
             </a>
 
-        </div>
+
+        </nav>
 
 
-        <!-- LOGOUT -->
+        {{-- BAGIAN BAWAH --}}
 
-        <div class="logout">
+        <div class="sidebar-bottom">
 
-            <form action="{{ route('logout') }}" method="POST">
+
+            <div class="admin-info">
+
+                <strong>
+                    Admin SIPMAS
+                </strong>
+
+                <span>
+                    {{ Auth::user()->nama_lengkap ?? 'Administrator' }}
+                </span>
+
+            </div>
+
+
+            <form action="{{ route('logout') }}"
+                  method="POST">
 
                 @csrf
 
-                <button type="submit">
+                <button type="submit"
+                        class="logout-button">
+
                     Keluar
+
                 </button>
 
             </form>
 
+
         </div>
+
 
     </aside>
 
 
-    <!-- MAIN -->
 
-    <main class="main">
+    {{-- =====================================================
+         MAIN
+         ===================================================== --}}
 
-        <div class="topbar">
+    <div class="admin-main">
 
-            <h2>
-                @yield('page-title', 'Dashboard Admin')
-            </h2>
 
-            <div class="user">
-                {{ Auth::user()->nama_lengkap }}
+        {{-- TOPBAR --}}
+
+        <header class="admin-topbar">
+
+
+            <div class="breadcrumb">
+
+                <span>
+                    Admin
+                </span>
+
+                <span>
+                    /
+                </span>
+
+                <strong>
+                    @yield('breadcrumb', 'Dashboard')
+                </strong>
+
             </div>
 
-        </div>
+
+            <div class="topbar-right">
 
 
-        <div class="content">
+                <input
+                    type="text"
+                    class="search-box"
+                    placeholder="Cari menu atau data..."
+                >
+
+
+                <div class="notification">
+                    🔔
+                </div>
+
+
+                <div class="avatar">
+                    A
+                </div>
+
+
+                <span class="topbar-name">
+                    Admin Sistem
+                </span>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        {{-- CONTENT --}}
+
+        <main class="admin-content">
+
+
+            {{-- SUCCESS --}}
 
             @if(session('success'))
+
                 <div class="alert alert-success">
+
                     {{ session('success') }}
+
                 </div>
+
             @endif
 
+
+            {{-- ERROR --}}
+
             @if(session('error'))
+
                 <div class="alert alert-error">
+
                     {{ session('error') }}
+
                 </div>
+
             @endif
+
+
+            {{-- VALIDATION ERROR --}}
+
+            @if($errors->any())
+
+                <div class="alert alert-error">
+
+                    <strong>
+                        Terjadi kesalahan:
+                    </strong>
+
+                    <ul style="margin:8px 0 0 18px;">
+
+                        @foreach($errors->all() as $error)
+
+                            <li>
+                                {{ $error }}
+                            </li>
+
+                        @endforeach
+
+                    </ul>
+
+                </div>
+
+            @endif
+
 
             @yield('content')
 
-        </div>
 
-    </main>
+        </main>
+
+
+    </div>
+
+
+</div>
 
 </body>
+
 </html>

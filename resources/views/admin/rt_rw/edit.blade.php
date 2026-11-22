@@ -1,133 +1,154 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit RT/RW - SIPMAS</title>
+@extends('layouts.admin')
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f6fa;
+@section('title', 'Edit Data RT/RW - SIPMAS')
+@section('breadcrumb', 'Edit Data RT/RW')
+
+@section('content')
+
+<div class="page-heading">
+    <h1>Edit Data RT/RW</h1>
+    <p>Perbarui data Rukun Tetangga dan Rukun Warga pada sistem SIPMAS.</p>
+</div>
+
+@if($errors->any())
+    <div class="alert alert-error">
+        <strong>Terjadi kesalahan:</strong>
+
+        <ul style="margin: 8px 0 0; padding-left: 20px;">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+<div class="admin-card">
+
+    <div style="
+        margin-bottom: 22px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e5ebf0;
+    ">
+        <h2 style="
+            margin: 0 0 6px;
+            color: #183b56;
+            font-size: 18px;
+        ">
+            Form Edit Data RT/RW
+        </h2>
+
+        <p style="
             margin: 0;
-            padding: 30px;
-        }
+            color: #6b7c93;
+            font-size: 13px;
+        ">
+            Perbarui data RT/RW yang dipilih.
+        </p>
+    </div>
 
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-
-        h2 {
-            margin-top: 0;
-        }
-
-        label {
-            display: block;
-            margin-top: 15px;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-
-        .btn {
-            margin-top: 20px;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-simpan {
-            background: #0d6efd;
-            color: white;
-        }
-
-        .btn-kembali {
-            background: #6c757d;
-            color: white;
-        }
-
-        .error {
-            background: #f8d7da;
-            color: #842029;
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-        }
-    </style>
-</head>
-
-<body>
-
-<div class="container">
-
-    <h2>Edit Data RT/RW</h2>
-
-    @if ($errors->any())
-        <div class="error">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <form action="{{ route('admin.rt_rw.update', $rtRw->id_rt_rw) }}" method="POST">
+    <form
+        action="{{ route('admin.rt_rw.update', $rtRw->id_rt_rw) }}"
+        method="POST"
+    >
         @csrf
         @method('PUT')
 
-        <label for="no_rt">Nomor RT</label>
-        <input
-            type="text"
-            id="no_rt"
-            name="no_rt"
-            value="{{ old('no_rt', $rtRw->no_rt) }}"
-            required
-        >
+        <div class="form-group">
+            <label for="no_rt">
+                Nomor RT
+            </label>
 
-        <label for="no_rw">Nomor RW</label>
-        <input
-            type="text"
-            id="no_rw"
-            name="no_rw"
-            value="{{ old('no_rw', $rtRw->no_rw) }}"
-            required
-        >
+            <input
+                type="text"
+                id="no_rt"
+                name="no_rt"
+                class="form-control"
+                value="{{ old('no_rt', $rtRw->no_rt) }}"
+                placeholder="Contoh: 001"
+                maxlength="5"
+                required
+            >
 
-        <label for="nama_ketua">Nama Ketua RT/RW</label>
-        <input
-            type="text"
-            id="nama_ketua"
-            name="nama_ketua"
-            value="{{ old('nama_ketua', $rtRw->nama_ketua) }}"
-            required
-        >
+            <small style="
+                display: block;
+                margin-top: 6px;
+                color: #718096;
+                font-size: 12px;
+            ">
+                Masukkan nomor RT.
+            </small>
+        </div>
 
-        <button type="submit" class="btn btn-simpan">
-            Simpan Perubahan
-        </button>
+        <div class="form-group">
+            <label for="no_rw">
+                Nomor RW
+            </label>
 
-        <a href="{{ route('admin.rt_rw.index') }}" class="btn btn-kembali">
-            Kembali
-        </a>
+            <input
+                type="text"
+                id="no_rw"
+                name="no_rw"
+                class="form-control"
+                value="{{ old('no_rw', $rtRw->no_rw) }}"
+                placeholder="Contoh: 005"
+                maxlength="5"
+                required
+            >
+
+            <small style="
+                display: block;
+                margin-top: 6px;
+                color: #718096;
+                font-size: 12px;
+            ">
+                Masukkan nomor RW.
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label for="nama_ketua">
+                Nama Ketua RT/RW
+            </label>
+
+            <input
+                type="text"
+                id="nama_ketua"
+                name="nama_ketua"
+                class="form-control"
+                value="{{ old('nama_ketua', $rtRw->nama_ketua) }}"
+                placeholder="Masukkan nama ketua RT/RW"
+                maxlength="100"
+                required
+            >
+        </div>
+
+        <div style="
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding-top: 15px;
+            margin-top: 10px;
+            border-top: 1px solid #e5ebf0;
+        ">
+
+            <a
+                href="{{ route('admin.rt_rw.index') }}"
+                class="admin-btn admin-btn-secondary"
+            >
+                Batal
+            </a>
+
+            <button
+                type="submit"
+                class="admin-btn admin-btn-primary"
+            >
+                Simpan Perubahan
+            </button>
+
+        </div>
+
     </form>
 
 </div>
 
-</body>
-</html>
+@endsection
